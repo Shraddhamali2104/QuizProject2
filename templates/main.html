@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+    main template 
+{% endblock %}
+
+{% block header %}
+    <!-- Override header content -->
+    <h1>WELCOME TO THE QUIZBUZZ!</h1>
+    <h3>we hope you will enjoy the quizzes...</h3>   
+{% endblock %}
+
+{% block content %}
+    <h1>Please login here </h1>
+    <form action="/login/admin" method="GET">
+        <button type="submit">Admin Login</button>
+    </form>
+
+    <form action="/login/student" method="GET">
+        <button type="submit">Student Login</button>
+    </form>
+{% endblock %}
+
+{% block extra_css %}
+    <style>
+        button {
+            padding: 12px 24px;
+            background-color: #0fa15b;
+            color: #0a0808;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #037767;
+        }
+    </style>
+{% endblock %}

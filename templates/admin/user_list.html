@@ -6,9 +6,6 @@
     <!-- Add your CSS styles here -->
 {% endblock %}
 
-{% block left_content %}
-    <!-- Navigation or sidebar content -->
-{% endblock %}
 
 {% block middle_content %}
     <!-- User List content -->
@@ -18,28 +15,38 @@
             <thead>
                 <tr>
                     <th>Serial No</th>
+                    <th>User Id</th>
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
-                    <th>Image Path</th>
-                    <th>Date Joined</th>
-                    <th>User Type</th>
+                    <th>Profile Pic</th>
+                    <!-- <th>Date Joined</th>
+                    <th>User Type</th> -->
                 </tr>
             </thead>
+            user_id SERIAL PRIMARY KEY,
+                user_type VARCHAR(20) NOT NULL CHECK (user_type IN ('student', 'teacher', 'admin', 'guest')),
+                username VARCHAR(50) NOT NULL UNIQUE,
+                first_name VARCHAR(50) NOT NULL,
+                last_name VARCHAR(50) NOT NULL,
+                email VARCHAR(100) NOT NULL UNIQUE,
+                phone_number VARCHAR(20) NOT NULL,
+                image_path 
             <tbody>
                 {% for row in user_data %}
                     <tr>
+                        <td>{{ loop.index + 1 }}</td>
                         <td>{{ row[0] }}</td>
-                        <td>{{ row[1] }}</td>
+                        <!-- <td>{{ row[1] }}</td> -->
                         <td>{{ row[2] }}</td>
                         <td>{{ row[3] }}</td>
                         <td>{{ row[4] }}</td>
                         <td>{{ row[5] }}</td>
                         <td>{{ row[6] }}</td>
-                        <td>{{ row[7] }}</td>
-                        <td>{{ row[8] }}</td>
+                        <img src="{{ url_for('static', filename='user_images/' + row[7]) }}" alt="Profile Image" class="circle">
+                        <!-- <td>{{ row[8] }}</td> -->
                     </tr>
                 {% endfor %}
             </tbody>

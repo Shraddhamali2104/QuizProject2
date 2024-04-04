@@ -4,7 +4,8 @@
 {% block style_content %}
 
 {% endblock %}
-{% block left_content %}
+{% block header %}
+
 
 <div class="container"> Welcome, {{username}} </div>
 
@@ -20,7 +21,7 @@
         </form>
         
         <form action="/add_subject">
-            <button type="submit">Subject Data</button>
+            <button type="submit">Add Subject</button>
         </form>
         
         <form action="/view_data_admin">
@@ -31,8 +32,8 @@
         <form action = "/users_list">
             <button type="submit">User List</button>
         </form>
-
-        <form action = "">
+        
+        <form action = "/add_questions">
             <button type="submit">Add Questions</button>
         </form>
     </div>

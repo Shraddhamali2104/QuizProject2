@@ -5,59 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Base Template{% endblock %}</title>
     <!-- Inline CSS -->
-    <style>
-        /* Style for header box */
-        body {
-            /* background-color: #c49bd9; */
-            background-image: url('/static/user_images/bgimg.jpg'); 
-        
-            background-size: cover; /* Adjust the background image size */
-            background-repeat: no-repeat; /* Prevent the background image from repeating */
-            font-family: Georgia, 'Times New Roman', Times, serif;
-        }
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
 
-        .header-box {
-            width: 100%;
-            padding: 0%;
-            box-sizing: border-box;
-            border: 3px solid #000;
-            margin-bottom: 20px;
-            margin-top: 0px;
-            background-color: rgb(239, 217, 182);
-            
-
-        }
-
-        /* Style for main box */
-        .main-box {
-            width: 50%;
-            height: 550px; ;
-            margin: 0 auto; /* Center the box */
-            padding: 20px;
-            box-sizing: border-box;
-            border: 3px solid #000;
-            text-align: center;
-            background-color: rgb(239, 217, 182);
-        }
-        .header-box{
-            text-align: center;
-        }
-        .footer-box{
-            width: 100%;
-            padding: 0%;
-            height: 30px;
-            text-align: center;
-        }
-    </style>
-</head>
+    {% block style_content %}
+    {% endblock %}
+    </head>
 <body>
+
 <!--<img src="D:\practice\mainimagea.jpg" alt="background-image">-->
 <!-- Header -->
 <header>
     <div class="header-box">
         {% block header %}
         <!-- Default header content -->
-        <h1>Header Title</h1>
+        <!-- <h1>Header Title</h1> -->
         {% endblock %}
     </div>
 </header>
@@ -66,8 +27,8 @@
 <main>
     <div class="main-box">
         
-        {% block content %}{% endblock %}
-       </div>
+        {% block middle_content %}{% endblock %}
+    
 
     </div>
 </main>

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, request
 from flask import redirect
 from flask import url_for
-from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id
+from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id, view_students_list
 
 admin_bp = Blueprint('admin', __name__) 
 
@@ -68,7 +68,7 @@ def user_list():
     if 'username' in session:
         username = session['username']
         # Fetch user data using the updated show_users_data function
-        data = show_users_data('admin', username)
+        data = view_students_list()
         if data:
             return render_template('admin/user_list.html', user_data=data, username=username)
         else:

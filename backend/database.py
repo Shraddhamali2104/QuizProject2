@@ -711,38 +711,13 @@ def update_profile_database(username, form_data):
             cursor.close()
             conn.close()
 
-def show_users_data1(user, username, test_id=0):
+def view_students_list():
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
 
-        if user == "admin":
-            # Fetch all data from accounts table
-            query = """SELECT ROW_NUMBER() OVER (ORDER BY u.user_id) AS serial_no,
-                u.username,
-                u.first_name,
-                u.last_name,
-                u.email,
-                u.phone_number,
-                u.image_path,
-                u.date_joined,
-                u.user_type
-            FROM accounts u"""
-
-            cursor.execute(query)
-        else:
-            query = "SELECT user_id FROM accounts WHERE username = %s;"
-            cursor.execute(query, (username,))
-            user_id = cursor.fetchone()[0]
-            if test_id == 0:
-                # Fetch complete data of specific user
-                query = "SELECT * FROM accounts WHERE user_id = %s"
-                parameters = (user_id,)
-            else:
-                # Fetch user data of specific test ID
-                query = "SELECT * FROM accounts WHERE user_id = %s AND test_id = %s"
-                parameters = (user_id, test_id)
-            cursor.execute(query, parameters)  # Use parameterized queries
+        query = "SELECT * FROM accounts WHERE user_type = %s"
+        cursor.execute(query, ('student',))  # Use parameterized queries
 
         rows = cursor.fetchall()
 

@@ -1,9 +1,10 @@
 from flask import Blueprint, jsonify, render_template, session, request
-from backend.database import get_test_data, show_users_data, get_test_details, add_users_data
+from backend.database import  show_users_data, get_test_details
 from flask import redirect
 from flask import url_for
 
 quiz_bp = Blueprint('quiz', __name__)
+
 
 # test_id = 0
 

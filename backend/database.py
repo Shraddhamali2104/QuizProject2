@@ -731,3 +731,26 @@ def view_students_list():
         if conn:
             cursor.close()
             conn.close()  # Ensure proper connection closure
+
+def remove_student_DB(user_id):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "DELETE FROM accounts WHERE user_id = %s;"
+        cursor.execute(query, (user_id,))  # Use parameterized queries
+
+        # rows = cursor.fetchall()
+
+        # return rows  # Return the fetched data
+        return True
+
+    except (psycopg2.Error, Exception) as e:
+        print(f"Error fetching user data: {e}")
+        return None  # Indicate an error occurred
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close() 
+    

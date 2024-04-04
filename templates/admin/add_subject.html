@@ -47,44 +47,14 @@
 </style>
 
 {% endblock %}
-{% block left_content %}
 
-<div class="container table1 table2">
-    <h2>Test Data Available in Database</h2>
-    <table> 
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Test Number</th>
-                <th>Test Duration</th>
-                <th>Total Marks</th>
-                <th>Total Questions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
-            <tr>
-                <td>{{ item[1] }}</td>
-                <td>{{ item[2] }}</td>
-                <td>{{ item[3] }}</td>
-                <td>{{ item[4] }}</td>
-                <td>{{ item[5] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-</div>
-
-
-{% endblock %}
 
 {% block middle_content %}
 <!-- Middle content -->
 
 <div class="container">
-    <h1>Section for Updating/Creating New TEST</h1>
-    <form action="/add_questions" method="GET">
+    <h1>Adding New Subject Test</h1>
+    <form action="/add_subject" method="post">
         <div class="form-group">
             <label for="subject">Subject:</label>
             <input type="text" id="subject" name="subject" class="form-control" style="width: 90%;">
@@ -112,35 +82,11 @@
 
         <!-- <input type="hidden" name="username" value="{{username}}"> -->
 
-        <button type="submit" name="submit_type" value="update">Update Test</button>
-        <button type="submit" name="submit_type" value="create">Create New Test</button>
+
+        <button type="submit" name="submit" value="create">Add Subject</button>
 
     </form>
 </div>
-<!--     
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const testNoInput = document.getElementById('test_no');
-            const testIdInput = document.getElementById('test_id');
-    
-            testNoInput.addEventListener('input', function () {
-                if (!Number.isInteger(parseFloat(testNoInput.value))) {
-                    testNoInput.classList.add('invalid-input');
-                } else {
-                    testNoInput.classList.remove('invalid-input');
-                }
-            });
-    
-            testIdInput.addEventListener('input', function () {
-                if (!Number.isInteger(parseFloat(testIdInput.value))) {
-                    testIdInput.classList.add('invalid-input');
-                } else {
-                    testIdInput.classList.remove('invalid-input');
-                }
-            });
-        });
-    </script>
-     -->
 
 
 {% endblock %}

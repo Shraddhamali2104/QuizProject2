@@ -18,7 +18,7 @@
         <div class="profile-details">
             <div class="profile-picture">
                 <!-- <img src="{{url_for('static', filename='/user_images/d.jpg')}}" alt="Profile Image" class="circle"> -->
-                <img src="{{ url_for('static', filename = 'user_images\'+ data[7])  }}" alt="Profile Image" class="circle">
+                <img src="{{ url_for('static', filename =  data[7])  }}" alt="Profile Image" class="circle">
             </div>
             <h2>Hello {{ data[1] }},</h2>
 
@@ -51,11 +51,10 @@
         </div>
     <!-- </div> -->
 
-
-    <form action="/edit_profile" method="GET">
-        <!-- <input type="hidden" name="user_type" value="{{user_type}}"> -->
-        <button type="submit" class="edit-button">Edit Profile</button>
-    </form>
+    <div>
+        <a href="/edit_profile">Edit Profile</a>
+        <a href="/admin">Home</a>
+    </div>
 </div>
 
 

@@ -26,14 +26,7 @@
                     <th>User Type</th> -->
                 </tr>
             </thead>
-            user_id SERIAL PRIMARY KEY,
-                user_type VARCHAR(20) NOT NULL CHECK (user_type IN ('student', 'teacher', 'admin', 'guest')),
-                username VARCHAR(50) NOT NULL UNIQUE,
-                first_name VARCHAR(50) NOT NULL,
-                last_name VARCHAR(50) NOT NULL,
-                email VARCHAR(100) NOT NULL UNIQUE,
-                phone_number VARCHAR(20) NOT NULL,
-                image_path 
+          
             <tbody>
                 {% for row in user_data %}
                     <tr>
@@ -45,11 +38,17 @@
                         <td>{{ row[4] }}</td>
                         <td>{{ row[5] }}</td>
                         <td>{{ row[6] }}</td>
-                        <img src="{{ url_for('static', filename='user_images/' + row[7]) }}" alt="Profile Image" class="circle">
+                        <img src="{{ url_for('static', filename=  row[7]) }}" alt="Profile Image" class="circle">
                         <!-- <td>{{ row[8] }}</td> -->
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+    
+        <div>
+            <a href="/admin">Home</a>
+            <a href="/remove_student">Remove Student</a>
+        </div>
+
     </div>
 {% endblock %}

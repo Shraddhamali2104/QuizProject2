@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    main template 
+{% endblock %}
+
+{% block header %}
+    <!-- Override header content -->
+    <h1>WELCOME TO THE QUIZBUZZ!</h1>
+    <h3>we hope you will enjoy the quizzes...</h3>   
+{% endblock %}
+
+{% block middle_content %}
+<div class="container">
+
+    <h1>Please login here </h1>
+    <form action="/login/admin" method="GET">
+        <button type="submit">Admin Login</button>
+    </form>
+    
+    <form action="/login/student" method="GET">
+        <button type="submit">Student Login</button>
+    </form>
+</div>
+{% endblock %}
+
+

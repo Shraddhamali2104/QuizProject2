@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz{% endblock %}
+{% block style_content %}
+
+{% endblock %}
+{% block left_content %}
+
+<!-- <div class="container"></div> -->
+<div class="container"> hello, {{username}}</div>
+
+{% endblock %}
+
+{% block middle_content %}
+<!-- Middle content -->
+<div class="container">
+    <!-- <div class="container2"> -->
+        <div class="profile-details">
+            <div class="profile-picture">
+                <!-- <img src="{{url_for('static', filename='/user_images/d.jpg')}}" alt="Profile Image" class="circle"> -->
+                <img src="{{ url_for('static', filename =  data[7])  }}" alt="Profile Image" class="circle">
+            </div>
+            <h2>Hello {{ data[1] }},</h2>
+
+            <form>
+
+
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="{{ data[2] }}" readonly><br><br>
+
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" value="{{ data[3] }}" readonly> <br><br>
+
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" value="{{ data[4] }}" readonly> <br><br>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{ data[5] }}" readonly><br><br>
+
+                <label for="phone_number">Phone Number:</label>
+                <input type="text" id="phone_number" name="phone_number" value="{{ data[6] }}" readonly> <br><br>
+               
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="{{ '*' * 8 }}"
+                    readonly><br><br>
+
+               
+
+               
+            </form>
+        </div>
+    <!-- </div> -->
+
+    <div>
+        <a href="/edit_profile">Edit Profile</a>
+        <a href="/admin">Home</a>
+    </div>
+</div>
+
+
+
+{% endblock %}

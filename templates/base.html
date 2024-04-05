@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Base Template{% endblock %}</title>
+    <!-- Inline CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+
+    {% block style_content %}
+    {% endblock %}
+    </head>
+<body>
+
+<!--<img src="D:\practice\mainimagea.jpg" alt="background-image">-->
+<!-- Header -->
+<header>
+    <div class="header-box">
+        {% block header %}
+        <!-- Default header content -->
+        <!-- <h1>Header Title</h1> -->
+        {% endblock %}
+    </div>
+</header>
+
+<!-- Main Content -->
+<main>
+    <div class="main-box">
+        
+        {% block middle_content %}{% endblock %}
+    
+
+    </div>
+</main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-box">
+    
+    </div>
+    
+</footer>
+
+</body>
+</html>
+

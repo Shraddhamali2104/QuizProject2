@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+    main template 
+{% endblock %}
+
+{% block header %}
+ 
+{% endblock %}
+
+{% block middle_content %}
+<div class="container">
+
+    <form action="/remove_student" method="post">
+
+        <label for="textbox">Enter User Id to delete</label>
+        <input type="text" name="user_id" >
+
+        <button type="button">Remove Student</button>
+    </form>
+
+    <div>
+        <a href="/admin">Home</a>
+    </div>
+</div>
+{% endblock %}
+
+

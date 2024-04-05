@@ -10,32 +10,77 @@
 {% endblock %}
 
 {% block middle_content %}
-<!-- Middle content -->
-
-<div class="container">
-    <h2>Welcome to {{ user }}, Signup Portal ... </h2>
+<div class="card p-4 mt-5">
     <form action="/signup" enctype="multipart/form-data" method="post">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="text" name="first_name" placeholder="First Name" required>
-        <input type="text" name="last_name" placeholder="Last Name" required>
-        <input type="email" name="email" placeholder="xyz@gmail.com" required>
-        <input type="text" name="phone_number" placeholder="+917558750366" required>
-        <input type="password" name="password" placeholder="Enter Password" required>
-        <br>
+        <div class="row g-3 mb-3">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" id="username" class="form-control" name="username" placeholder="username"
+                        required />
+                    <label for="username">Enter Username</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" id="phone_number" class="form-control" name="phone_number"
+                        placeholder="Mobile Number" aria-label="Mobile Number" required />
+                    <label for="phone_number">Phone Number</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3 mb-3">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" id="first_name" class="form-control" name="first_name" placeholder="First name"
+                        aria-label="First name" required />
+                    <label for="first_name"> First Name</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" id="last_name" class="form-control" name="last_name" placeholder="Last name"
+                        aria-label="Last name" required />
+                    <label for="Last"> Last Name</label>
 
-        <label for="profile_pic">Profile Picture:</label>
-        <input type="file" name="profile_pic" id="profile_pic" accept="image/jpeg,image/png">
-        <br>
+                </div>
+            </div>
+        </div>
 
 
-        <button type="submit">Signup</button>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required />
+            <label for="email">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+
+            <span id="passwordHelpInline" class="form-text">
+                Must be 8-20 characters long
+            </span>
+
+        </div>
+
+
+        <div class="input-group mb-3 mt-3">
+            <input type="file" name="profile_pic" class="form-control" id="profile_pic" accept="image/jpeg,image/png">
+            <label class="input-group-text" for="profile_pic">Profile Picture</label>
+        </div>
+
+
+        <button type="submit" class="btn btn-outline-success mt-3">Signup</button>
+
+
+
     </form>
+    <div class="mt-3">
+        <p class="card-text">Already have an account?</p>
+        <a href="/login/{{ user }}" class="btn btn-outline-success ">Log In</a>
+    </div>
 
-    <form action="/login/{{ user }}" method="get">
-        <p>Already have an account?</p>
-        <!-- <input type="hidden" name="user" value="{{ user }}"> -->
-        <button type="submit">Log In</button>
-    </form>
+</div>
+
+
 </div>
 
 

@@ -9,9 +9,16 @@ login_bp = Blueprint('login', __name__)
 
 @login_bp.route('/')
 def index():
-    setup_initial_tables()
-    insert_initial_data()
-    return render_template('main.html')
+    if 'username' in session:
+        user = session['user']
+        if user == 'admin':
+            return redirect(url_for('admin.index'))
+        elif user == 'student':
+            return redirect(url_for('student.index'))
+    else:
+        setup_initial_tables()
+        insert_initial_data()
+        return render_template('main.html')
 
 @login_bp.route('/login/<user>', methods=['GET'])
 def login_get(user):
@@ -76,4 +83,8 @@ def signup_submit():
         print("Error occurred:", e)
         return "An error occurred. Please try again later."
     
-   
+@login_bp.route('/logout', methods = ['GET'])
+def logout():
+    session.pop('username', None)
+    session.pop('user', None)
+    return render_template('main.html')

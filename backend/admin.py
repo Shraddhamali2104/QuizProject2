@@ -54,6 +54,8 @@ def add_questions_get():
 
         return "incorrect details to Update table, try again, or create new table"
     else:
+        pass
+
         
 
 @admin_bp.route('/add_questions', methods=['POST']) #Handles the submission of questions form.
@@ -69,7 +71,7 @@ def add_questions():
         return "Unable to add questions to database, Go back and try again"
     
 
-@admin_bp.route('/user_list', methods=['GET'])
+@admin_bp.route('/users_list', methods=['GET'])
 def user_list():
     if 'username' in session:
         username = session['username']
@@ -86,7 +88,7 @@ def user_list():
 @admin_bp.route('/remove_student', methods=['GET'])
 def remove_student():
     if 'username' in session:
-        if request.methods == 'GET':
+        if request.method == 'GET':
             data = view_students_list()
             if data:
                 return render_template('admin/remove_student.html', user_data = data)
@@ -104,7 +106,7 @@ def remove_student():
 @admin_bp.route('/subject_data', methods=['GET', 'POST'])
 def subject_data():
     if 'username' in session:
-        if request.methods == 'GET':
+        if request.method == 'GET':
             data = get_test_details()
             if data:
                 return render_template('admin/subject_data.html', data = data)

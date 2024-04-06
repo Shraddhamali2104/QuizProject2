@@ -53,7 +53,6 @@ def setup_initial_tables():
     """
 
     try:
-        # Replace with your actual database connection logic (e.g., using psycopg2)
         conn = connect_to_db()
         cursor = conn.cursor()
 

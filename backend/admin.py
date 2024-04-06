@@ -109,13 +109,9 @@ def subject_data():
             if data:
                 return render_template('admin/subject_data.html', data = data)
             else:
-                return "No users found."
+                return "No data found."
         else:
-            user_id = request.form['user_id']
-            if(remove_student_DB(user_id)):
-                return redirect(url_for('admin.user_list'))
-            else:
-                return "unable to delete"
+            pass
     else:
         return redirect(url_for('login.index'))
 

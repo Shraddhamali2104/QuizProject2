@@ -54,7 +54,7 @@ def add_questions_get():
 
         return "incorrect details to Update table, try again, or create new table"
     else:
-        
+        pass
 
 @admin_bp.route('/add_questions', methods=['POST']) #Handles the submission of questions form.
 def add_questions():

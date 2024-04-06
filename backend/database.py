@@ -1,6 +1,10 @@
-from flask import Flask, redirect, url_for, request,redirect, session
+from flask import session
+import psycopg2
+import hashlib  # For generating a random salt
+import subprocess
 import os
-import psycopg2, hashlib
+from datetime import date, datetime
+import secrets
 
 def connect_to_db():
     db_password = os.environ.get("DB_PASSWORD")
@@ -35,7 +39,7 @@ def enable_pgcrypto(conn):
         return False
     
 def generate_random_salt():
-    return os.urandom(32)  # Generate a random salt
+    return os.urandom(32)  
 
 def hash_password(password, salt):
     hashed_password = hashlib.pbkdf2_hmac(
@@ -438,6 +442,58 @@ def get_test_id(form_data):
 
     except (psycopg2.Error, Exception) as e:
         print(f"Error retrieving test data: {e}")
+        return None  # Indicate an error occurred
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()  # Ensure proper connection closure
+
+def get_test_data(id):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        # Use parameterized queries to prevent SQL injection
+        query = "SELECT * FROM test_data WHERE test_id = %s"
+        cursor.execute(query, (id,))
+
+        rows = cursor.fetchall()
+
+        if rows:
+            return rows  # Return the test data if found
+        else:
+            return None  # Indicate that the test data is not found
+
+    except (psycopg2.Error, Exception) as e:
+        print(f"Error retrieving test data: {e}")
+        return None  # Indicate an error occurred
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()  # Ensure proper connection closure
+
+def add_users_data(username, form_data):
+    
+    today_date = date.today().strftime('%Y-%m-%d')  # Format: YYYY-MM-DD
+    current_time = datetime.now().strftime('%H:%M:%S')  # Format: HH:MM:SS
+
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "SELECT user_id FROM accounts WHERE username = %s;"
+        cursor.execute(query, (username,))
+        user_id = cursor.fetchone()[0]
+
+        query = "INSERT INTO user_data (user_id, test_id, score, time_required, date_stamp, time_stamp ) VALUES (%s, %s, %s, %s, %s, %s)"
+        cursor.execute(query, (user_id, form_data['test_id'], form_data['total_score'], form_data['time_taken'], today_date, current_time ))
+
+        conn.commit()
+
+    except (psycopg2.Error, Exception) as e:
+        print(f"Error fetching user data: {e}")
         return None  # Indicate an error occurred
 
     finally:

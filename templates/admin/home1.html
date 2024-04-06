@@ -7,8 +7,8 @@
 {% block header %}
 
 
-<div class="container text-center"> Welcome, {{username}} </div>
-<div class =" container text-center"><h1>Choose your required section</h1></div>
+<div class=" text-center"> Welcome, {{username}} </div>
+<div class ="  text-center"><h1>Choose your required section</h1></div>
 
     
 {% endblock %}
@@ -18,45 +18,33 @@
    
     <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
         <div class="modal-dialog" role="document">
-            <div class="modal-content rounded-4 shadow ">
-              <div class="modal-header p-5 pb-4 border-bottom-0">
-              
-                
-                <div class=" row-gap-3">
-    
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
                     <div class="container text-center">
-                      
-                        <form action="/view_profile/{{ username }}">
-                            <!-- <input type="hidden" name="user_type" value="admin"> -->
-                            <button type="submit"class="btn btn-primary btn-lg mb-3"  >View Profile</button>
-                        </form>
-                        
-                        <form action = "/users_list">
-                            <button type="submit" class="btn btn-primary btn-lg mb-3 ">User List</button>
-                        </form>
-                        
-                        <form action="/view_data_admin">
-                            <!-- <input type="hidden" name="username" value="{{username}}"> -->
-                            <button type="submit" class="btn btn-primary btn-lg mb-3"  >View Data</button>
-                        </form>
-                
-                        <form action="/subject_data">
-                            <button type="submit"class="btn btn-primary btn-lg mb-3" >Subject Data</button>
-                        </form>
-                
-                        <form action = "/add_questions">
-                            <button type="submit"  class="btn btn-primary btn-lg mb-3 ">Add Questions</button>
-                        </form>
+                        <div class="row row-gap-3 justify-content-center">
+                            <form action="/view_profile/{{ username }}">
+                                <!-- <input type="hidden" name="user_type" value="admin"> -->
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">View Profile</button>
+                            </form>
+                            <form action="/users_list">
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">User List</button>
+                            </form>
+                            <form action="/view_data_admin">
+                                <!-- <input type="hidden" name="username" value="{{username}}"> -->
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">View Data</button>
+                            </form>
+                            <form action="/subject_data">
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">Subject Data</button>
+                            </form>
+                            <form action="/add_questions">
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">Add Questions</button>
+                            </form>
+                        </div>
                     </div>
-                    
-                    </div>
-                    
-                
-              </div>
+                </div>
             </div>
-          </div>
-      </div>
-
+        </div>
+    </div>
 
 
    

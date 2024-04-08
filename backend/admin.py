@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, request
 from flask import redirect
 from flask import url_for
-from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id, view_students_list, remove_student_DB ,update_subjectDB
+from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id, view_students_list, remove_student_DB ,update_subjectDB ,remove_subjectDB
 
 admin_bp = Blueprint('admin', __name__) 
 
@@ -52,36 +52,19 @@ def update_subject():
 
             
                 
-@admin_bp.route('/add_questions', methods=['GET'])
-def add_questions_get():
-    test_id = get_test_id(request.args)
-    username = session['username']
-    #function in Database to add new subject in the database.
-    if(request.args.get('submit_type') == 'update'):
-        if(check_details_to_update_table(request.args)):#validate the details for updating the table.
-            
-            
-            q_n = get_question_number_from_test_details(test_id)
-            return render_template('admin/add_questions.html', test_id = test_id, question_no = q_n, username = username )
-
-        return "incorrect details to Update table, try again, or create new table"
-    else:
-        pass
-
-        
-
-@admin_bp.route('/add_questions', methods=['POST']) #Handles the submission of questions form.
+@admin_bp.route('/add_questions', methods=['GET', 'POST'])
 def add_questions():
-    if(add_questions_to_database(request.form)):
-        test_id = request.form['test_id']
-        q_n = get_question_number_from_test_details(test_id)
-        username = session['username']
-
-        # question_number = 0 
-        return render_template('admin/add_questions.html', test_id = test_id, question_no = q_n, username = username )
+    if 'username' in session:
+        if request.method == 'GET':
+            pass
+        else:
+            pass
     else:
-        return "Unable to add questions to database, Go back and try again"
-    
+        redirect(url_for('login.index'))
+
+   
+
+
 
 @admin_bp.route('/users_list', methods=['GET'])
 def user_list():
@@ -128,6 +111,19 @@ def subject_data():
             pass
     else:
         return redirect(url_for('login.index'))
+
+@admin_bp.route('/remove_subject', methods = ['GET' ,'POST'])
+def remove_subject():
+    if request.method == 'GET':
+        return render_template('admin/remove_subject.html')
+    else:
+        if(remove_subjectDB(request.form)):
+            return redirect(url_for('admin.subject_data'))
+        else:
+            return "Unable to remove test "
+
+         
+
 
 
 

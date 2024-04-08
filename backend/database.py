@@ -781,3 +781,27 @@ def update_subjectDB(form_data):
         if conn:
             cursor.close()
             conn.close()
+
+
+def remove_subjectDB(form_data):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    subject = form_data["subject"]
+    test_no = int(form_data["test_no"])
+
+    try:
+        query = "DELETE FROM test_details WHERE subject=%s AND test_no=%s"
+        cursor.execute(query ,(subject ,test_no))
+        conn.commit()
+        return True
+     
+    except(Exception) as e:
+        print(f"Error Occured : {e}")
+        return False
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()    
+

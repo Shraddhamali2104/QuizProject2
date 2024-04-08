@@ -1,12 +1,10 @@
 from flask import Blueprint, jsonify, render_template, session, request
-from backend.database import  show_users_data, get_test_details
+from backend.database import  show_users_data, get_test_details, get_test_data, add_users_data
 from flask import redirect
 from flask import url_for
 
 quiz_bp = Blueprint('quiz', __name__)
 
-
-# test_id = 0
 
 @quiz_bp.route('/home')
 def index(): #Displays the home page with quiz details.
@@ -20,18 +18,10 @@ def index(): #Displays the home page with quiz details.
 
 @quiz_bp.route('/start-quiz', methods=['POST'])
 def start_quiz():
-    #Starts a quiz session.
-    # global current_data  # Access the global current_data variable
-    # global test_id
-    # print("requset. form :: ")
-    # print(request.form)
-
-    # username = request.form['username']
     test_id = int(request.form['test_id'])
     timer_value = int(request.form['test_duration'])
 
     data = get_test_data(test_id)
-    # print(data)
     
     return render_template('test_section/quiz.html', row_data=data, index=0, timer_value=timer_value, username = session['username'])
 

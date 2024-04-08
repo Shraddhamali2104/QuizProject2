@@ -12,27 +12,28 @@
 
 {% block middle_content %}
     <!-- Middle content -->
-
-    <div class="container">
-        <h2>User Main Page</h2>
-        
-        <!-- Form for viewing profile -->
-        <form action="/view_profile/{{ username }}" method="GET">
-            <!-- <input type="hidden" name="user_type" value="student"> -->
-            <button type="submit">View Profile</button>
-        </form>
-        
-        <!-- Form for going to test section -->
-        <form action="/go_to_test_section" method="GET">
-            <!-- <input type="hidden" name="username" value="{{ username }}"> -->
-            <button type="submit">Go to Test Section</button>
-        </form>
-        
-        <!-- Form for viewing previous test history -->
-        <form action="/view_previous_tests" method="GET">
-            <!-- <input type="hidden" name="username" value="{{ username }}"> -->
-            <button type="submit">View Previous Test History</button>
-        </form>
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
+                    <div class="container text-center">
+                        <div class="row row-gap-3 justify-content-center">
+                            <form action="/view_profile/{{ username }}" method ="GET">
+                                <!-- <input type="hidden" name="user_type" value="admin"> -->
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">View Profile</button>
+                            </form>
+                            <form action="/go_to_test_section" method="GET">
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">User List</button>
+                            </form>
+                            <form action="/view_previous_tests" method="GET">
+                                <!-- <input type="hidden" name="username" value="{{username}}"> -->
+                                <button type="submit" class="btn btn-primary btn-lg mb-3">View Data</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
 {% endblock %}

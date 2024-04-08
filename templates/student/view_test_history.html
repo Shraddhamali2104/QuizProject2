@@ -1,38 +1,46 @@
 {% extends 'base.html' %}
 
 {% block title %}Quiz{% endblock %}
-{% block style_content %}
 
-{% endblock %}
-{% block left_content %}
 
-<div class="container"> hello, {{username}}</div>
-
-{% endblock %}
 
 {% block middle_content %}
-    <!-- Middle content -->
 
-    <div class="container">
-        <h2>User Main Page</h2>
-        
-        <!-- Form for viewing profile -->
-        <form action="/view_profile/{{ username }}" method="GET">
-            <!-- <input type="hidden" name="user_type" value="student"> -->
-            <button type="submit">View Profile</button>
-        </form>
-        
-        <!-- Form for going to test section -->
-        <form action="/go_to_test_section" method="GET">
-            <!-- <input type="hidden" name="username" value="{{ username }}"> -->
-            <button type="submit">Go to Test Section</button>
-        </form>
-        
-        <!-- Form for viewing previous test history -->
-        <form action="/view_previous_tests" method="GET">
-            <!-- <input type="hidden" name="username" value="{{ username }}"> -->
-            <button type="submit">View Previous Test History</button>
-        </form>
-    </div>
-    
+<div class="container table1 max-width">
+<table>
+    <thead>
+        <tr>
+            <th>Serial No</th>
+            <th>Subject</th>
+            <th>Test Number</th>
+            <th>User Score</th>
+            <th>Total Score</th>
+            <th>Time Taken by User</th>
+            <th>Test Duration</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in row_data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div>
+    <a href="/">Home</a>
+</div>
+</div>
+
 {% endblock %}

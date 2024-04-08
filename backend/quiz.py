@@ -1,41 +1,69 @@
-from flask import Blueprint, jsonify, render_template, session, request
-from backend.database import  show_users_data, get_test_details, get_test_data, add_users_data
-from flask import redirect
-from flask import url_for
+from flask import Blueprint, render_template, session, request, redirect, url_for
+from backend.database import (
+    get_subject_namesDB,
+    get_all_tests_DB,
+    get_test_data,
+    get_test_basic_details,
+    add_result_to_user_data_DB, 
+    show_users_data,
+)
 
-quiz_bp = Blueprint('quiz', __name__)
+quiz_bp = Blueprint("quiz", __name__)
 
-
-@quiz_bp.route('/home')
-def index(): #Displays the home page with quiz details.
-    # Check if user is logged in
-    if 'username' in session:
-        data = get_test_details()
-        # print(data)
-        return render_template('test_section/home.html', data = data, username = session['username'])
+@quiz_bp.route("/quiz", methods=["GET", "POST"])
+def index():
+    if "username" in session:
+        if request.method == "GET":
+            data = get_subject_namesDB()
+            if data:
+                return render_template("test_section/home.html", data=data)
+            else:
+                return "No subjects found"
+        else:
+            subject = request.form["subject"]
+            data = get_all_tests_DB(subject)
+            if data:
+                return render_template("test_section/home2.html", data=data)
+            else:
+                return "No test found"
     else:
         return redirect(url_for('login.index'))
 
-@quiz_bp.route('/start-quiz', methods=['POST'])
-def start_quiz():
-    test_id = int(request.form['test_id'])
-    timer_value = int(request.form['test_duration'])
 
-    data = get_test_data(test_id)
-    
-    return render_template('test_section/quiz.html', row_data=data, index=0, timer_value=timer_value, username = session['username'])
+@quiz_bp.route("/start_test", methods=["GET", "POST"])
+def start_test():
+    # return "success"
+    if "username" in session:
+        if request.method == "GET":
+            test_id = request.args.get("test_id")
+            # print(test_id)
+            return render_template("test_section/instructions.html", test_id = test_id)
+        else:
+            test_id = request.form["test_id"]
+            data = get_test_data(test_id)
+            basic_data = get_test_basic_details(test_id)
+            return render_template(
+                "test_section/quiz.html", row_data=data,index=0, basic_data=basic_data
+            )
+    else:
+        return redirect(url_for('login.index'))
 
-@quiz_bp.route('/submit', methods=['POST'])
+@quiz_bp.route("/submit", methods = ['GET', 'POST'])
 def submit():
-    # global test_id
-    username = session['username']
-    test_id = int(request.form['test_id'])
-    
-    total_correct = int(request.form['total_score'])
+    if 'username' in session:
+        if request.method == 'POST':
+            username = session['username']
+            total_score = int(request.form['total_score'])
+            test_id = int(request.form['test_id'])
 
-    add_users_data(username, request.form)
+            add_result_to_user_data_DB(request.form, username)
+            data = show_users_data(session['user'], username, test_id )
+            if(data):
+                return render_template("test_section/result.html", total_score = total_score, data = data )
+            else:
+                return "unable to submit result"
 
-    data = show_users_data('student', username, test_id)
-    # print(data)
-    return render_template('test_section/result.html', row_data = data, total_correct = total_correct, username = username) 
-
+        else:
+            pass
+    else:
+        return redirect(url_for('login.index'))

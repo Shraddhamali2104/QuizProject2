@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz{% endblock %}
+
+
+{% block middle_content %}
+
+<h2>This is instructions Page</h2>
+
+<p>Check whether you should go directly to an exam hall or a waiting room. 4. Do not bring any unauthorized material (e.g. written notes, notes in dictionaries, paper, and sticky tape eraser,). Pencil cases and glasses cases must not be taken to your desks.
+</p>
+
+
+
+<form action="/start_test" method="POST">
+    <input type="hidden" name="test_id" value="{{test_id}}">
+    
+    <button type="submit">Start Quiz</button>
+
+</form>
+
+
+{% endblock %}

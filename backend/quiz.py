@@ -43,7 +43,7 @@ def start_test():
             data = get_test_data(test_id)
             basic_data = get_test_basic_details(test_id)
             return render_template(
-                "test_section/quiz.html", row_data=data,index=0, basic_data=basic_data
+                "test_section/quiz.html", row_data=data, index=0, basic_data=basic_data
             )
     else:
         return redirect(url_for('login.index'))

@@ -179,7 +179,7 @@
         var totalScore = 0;
         // Iterate through all questions and check user's answers
         for (var i = 0; i < row_data.length; i++) {
-          var correctAnswer = row_data[i][8]; // Correct answer for the current question
+          var correctAnswer = row_data[i][5]; // Correct answer for the current question
           var userAnswer = userAnswers[i]; // User's selected answer for the current question
           if (userAnswer === correctAnswer) { // Check if user answered correctly
             totalScore++;

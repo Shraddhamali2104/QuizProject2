@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, request
 from flask import redirect
 from flask import url_for
-from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id, view_students_list, remove_student_DB
+from backend.database import get_test_details, add_questions_to_database, add_test_details, get_question_number_from_test_details, check_details_to_update_table, show_users_data, get_test_id, view_students_list, remove_student_DB ,update_subjectDB
 
 admin_bp = Blueprint('admin', __name__) 
 
@@ -28,8 +28,8 @@ def add_subject():
     if request.method == 'GET':
         return render_template('admin/add_subject.html', username = session['username'])
     else:
-        test_id = get_test_id(request.form)
-        username = session['username']
+        # test_id = get_test_id(request.form)
+        # username = session['username']
 
         if(add_test_details(request.form)):
             
@@ -38,8 +38,20 @@ def add_subject():
             return "unable to add data to the test_details table"
             # return redirect(url_for('admin.index'))
 
-   
+@admin_bp.route('/update_subject', methods=['GET','POST'])
+def update_subject():
+    if request.method == 'GET':
+        return render_template('admin/update_subject.html')
+    
+    else:
+        if(update_subjectDB(request.form)):
+            return redirect(url_for('admin.subject_data'))
+        else:
+            return "Error occured"
 
+
+            
+                
 @admin_bp.route('/add_questions', methods=['GET'])
 def add_questions_get():
     test_id = get_test_id(request.args)
@@ -85,15 +97,15 @@ def user_list():
         return redirect(url_for('login.index'))
 
 
-@admin_bp.route('/remove_student', methods=['GET'])
+@admin_bp.route('/remove_student', methods=['GET', 'POST'])
 def remove_student():
     if 'username' in session:
         if request.method == 'GET':
-            data = view_students_list()
-            if data:
-                return render_template('admin/remove_student.html', user_data = data)
-            else:
-                return "No users found."
+            # data = view_students_list()
+            # if data:
+            return render_template('admin/remove_student.html')
+            # else:
+                # return "No users found."
         else:
             user_id = request.form['user_id']
             if(remove_student_DB(user_id)):
@@ -111,13 +123,9 @@ def subject_data():
             if data:
                 return render_template('admin/subject_data.html', data = data)
             else:
-                return "No users found."
+                return "No Subjects found."
         else:
-            user_id = request.form['user_id']
-            if(remove_student_DB(user_id)):
-                return redirect(url_for('admin.user_list'))
-            else:
-                return "unable to delete"
+            pass
     else:
         return redirect(url_for('login.index'))
 

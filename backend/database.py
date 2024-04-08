@@ -506,7 +506,7 @@ def add_test_details(form_data):
         # Use parameterized queries to prevent SQL injection
         query = """ INSERT INTO test_details (subject, test_no, test_duration, total_marks, total_questions) VALUES (%s, %s, %s, %s, %s) """
 
-        parameters = (subject, new_test_no, test_duration, total_marks,total_questions)
+        parameters = (subject, new_test_no, test_duration, total_marks, total_questions)
 
         cursor.execute(query, parameters)
         conn.commit()
@@ -741,7 +741,7 @@ def remove_student_DB(user_id):
         cursor.execute(query, (user_id,))  # Use parameterized queries
 
         # rows = cursor.fetchall()
-
+        conn.commit()
         # return rows  # Return the fetched data
         return True
 
@@ -754,3 +754,30 @@ def remove_student_DB(user_id):
             cursor.close()
             conn.close() 
     
+def update_subjectDB(form_data):
+    conn= connect_to_db()
+    cursor = conn.cursor()
+
+    subject = form_data["subject"]
+    test_no = int(form_data["test_no"])
+    total_marks = int(form_data["total_marks"])
+    test_duration = int(form_data["test_duration"])
+    
+    try:
+
+        query = "UPDATE test_details SET total_marks = %s ,test_duration = %s WHERE subject = %s AND test_no = %s"
+
+        cursor.execute(query , (total_marks , test_duration , subject ,test_no))
+        print("query executed Update subject")
+
+        conn.commit()
+        return True 
+
+    except(Exception) as e:
+        print(f"Error occured: {e}")
+        return False
+    
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()

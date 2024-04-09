@@ -9,6 +9,10 @@
 {% endblock %}
 
 {% block middle_content %}
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
 <div class="container table1 table2">
     <h2>Test Data Available in Database</h2>
     <table> 
@@ -33,15 +37,22 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <div>
-        <a href="/add_subject">Add Subject</a>
-        <a href="/update_subject">Update Subject Details</a>
-        <a href="/remove_subject">Remove Subject</a>
-        <a href="/">Home</a>
+<br>
+    <div class="align-items-center">
+        <a href="/add_subject" class="btn btn-success">Add Subject</a>
+        <br>
+        <a href="/update_subject" class="btn btn-primary">Update Subject Details</a>
+        <br>
+        <a href="/remove_subject" class="btn btn-danger">Remove Subject</a>
+        
     </div>
     
 </div>
+</div>
+</div>
+</div>
+</div>
+
 {% endblock %}
 
 

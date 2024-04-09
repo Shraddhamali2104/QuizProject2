@@ -2,22 +2,36 @@
 
 {%block title%}
 {%endblock%}
-{%block middle_content%}
-<div>
-    <h2>Remove Test</h2>
+{%block header %}
+<div class="container text-center" >
+    <h2>Remove Test <h2>
+   
 </div>
+{% endblock%}
+{%block middle_content%}
+
+<!-- <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin"> -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
 <form action="/remove_subject" method="post">
+    <div class="col-sm-6 ">
     <div>
         <label for="subject">Enter Subject</label>
-        <input type="text" name="subject" id="subject">
+        <input type="text" class="form-control" name="subject" id="subject">
     </div>
     <div>
         <label for="test_no">Enter Test No</label>
-        <input type="text" name="test_no" id="test_no">
+        <input type="text" class="form-control" name="test_no" id="test_no">
     </div>
-    <a href="/">Home</a>
-    <button type="submit">Remove</button>
+    <br>
+    <button type="submit" class="btn btn-danger " >Remove</button>
+    </div>
 </form>
+</div>
+</div>
+</div>
+<!-- </div> -->
 
 {%endblock%}
 

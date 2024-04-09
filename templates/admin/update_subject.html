@@ -9,33 +9,43 @@
 
 {% block middle_content %}
 <!-- Middle content -->
-
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content rounded-4 shadow">
+          <div class="modal-header p-5 pb-4 border-bottom-0">
 <div class="container">
   <form action="/update_subject" method="POST">
-
+    <div class="col-sm-6">
     <div>
         <label for="subject">Enter Subject Name:</label>
-        <input type="text" name="subject" id="subject">
+        <input type="text" class="form-control" name="subject" id="subject">
 
     </div>
     <div>
         <label for="test_no">Enter Test No:</label>
-        <input type="text" name="test_no" id="test_no">
+        <input type="text" class="form-control" name="test_no" id="test_no">
 
     </div>
     <div>
         <label for="total_marks">Enter Total Marks</label>
-        <input type="text" name="total_marks" id="total_marks">
+        <input type="text" class="form-control" name="total_marks" id="total_marks">
     </div>
     <div>
         <label for="test_duration">Enter Test Duration</label>
-        <input type="text" name="test_duration" id="test_duration">
+        <input type="text" class="form-control" name="test_duration" id="test_duration">
     </div>
+    <br>
      
-    <a href="/">Home</a> 
-    <button type="submit"> Update</button>
+  
+    <button type="submit" class="btn btn-primary"> Update</button>
   </form>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 
 
 {% endblock %}

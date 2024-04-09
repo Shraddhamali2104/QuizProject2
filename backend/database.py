@@ -6,6 +6,7 @@ import os
 from datetime import date, datetime
 import secrets
 
+
 def connect_to_db():
     db_password = os.environ.get("DB_PASSWORD")
     if not db_password:
@@ -18,6 +19,7 @@ def connect_to_db():
         host=os.environ.get("DB_HOST"),
     )
     return conn
+
 
 def enable_pgcrypto(conn):
     """
@@ -37,15 +39,18 @@ def enable_pgcrypto(conn):
     except Exception as e:
         print(f"Error enabling pgcrypto extension: {e}")
         return False
-    
+
+
 def generate_random_salt():
-    return os.urandom(32)  
+    return os.urandom(32)
+
 
 def hash_password(password, salt):
     hashed_password = hashlib.pbkdf2_hmac(
         "sha256", password.encode("utf-8"), salt, 100000
     )
     return hashed_password.hex()
+
 
 def setup_initial_tables():
     """
@@ -136,6 +141,7 @@ def setup_initial_tables():
 
     return None  # Indicate successful execution
 
+
 def insert_initial_data():
     """
     Inserts initial data into the database tables if they are empty, using secure password hashing.
@@ -144,7 +150,7 @@ def insert_initial_data():
     sample data if the table is empty. It uses secure password hashing for the user account.
 
     Raises an exception if there's an error connecting to the database or executing queries.
-    
+
     """
 
     try:
@@ -244,7 +250,6 @@ def insert_initial_data():
             conn.close()
 
 
-
 def authenticate_user(user, username, password):
 
     try:
@@ -279,11 +284,13 @@ def authenticate_user(user, username, password):
             cursor.close()
             conn.close()
 
+
 def hash_password(password, salt):
     hashed_password = hashlib.pbkdf2_hmac(
         "sha256", password.encode("utf-8"), salt, 100000
     )
     return hashed_password.hex()
+
 
 def secure_compare(val1, val2):
     """
@@ -303,6 +310,7 @@ def secure_compare(val1, val2):
     for x, y in zip(val1, val2):
         result |= ord(x) ^ ord(y)
     return result == 0  # Constant time comparison
+
 
 def signup_user(form_data, image_path):
 
@@ -369,7 +377,8 @@ def signup_user(form_data, image_path):
         if conn:
             cursor.close()
             conn.close()
-    
+
+
 def show_users_data(user, username, test_id=0):
     try:
         conn = connect_to_db()
@@ -400,11 +409,33 @@ def show_users_data(user, username, test_id=0):
             user_id = cursor.fetchone()[0]
             if test_id == 0:
                 # Fetch complete data of specific user
-                query = "SELECT * FROM user_data WHERE user_id = %s"
+                query = """SELECT ROW_NUMBER() OVER (ORDER BY ud.id) AS serial_no,
+                td.subject,
+                td.test_no,
+                ud.score ,
+                td.total_marks,
+                ud.time_required,
+                td.test_duration,
+                ud.date_stamp,
+                ud.time_stamp
+            FROM user_data ud
+            INNER JOIN test_details td ON ud.test_id = td.test_id
+            WHERE user_id = %s ;"""
                 parameters = (user_id,)
             else:
                 # Fetch user data of specific test ID
-                query = "SELECT * FROM user_data WHERE user_id = %s AND test_id = %s"
+                query = """
+    SELECT 
+        ROW_NUMBER() OVER (ORDER BY user_data.id) AS serial_no,
+        user_data.score,
+        user_data.time_required,
+        user_data.date_stamp, 
+        user_data.time_stamp
+    FROM 
+        user_data
+    WHERE 
+        user_id = %s AND test_id = %s;
+"""
                 parameters = (user_id, test_id)
             cursor.execute(query, parameters)  # Use parameterized queries
 
@@ -423,15 +454,15 @@ def show_users_data(user, username, test_id=0):
 
 
 def get_test_id(form_data):
-    subject = form_data['subject']
-    test_no = form_data['test_no']
+    subject = form_data["subject"]
+    test_no = form_data["test_no"]
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
 
         # Use parameterized queries to prevent SQL injection
         query = "SELECT * FROM test_details WHERE subject = %s AND test_no = %s"
-        cursor.execute(query, (subject,test_no))
+        cursor.execute(query, (subject, test_no))
 
         rows = cursor.fetchone()[0]  # Assuming a single value is returned
 
@@ -449,35 +480,11 @@ def get_test_id(form_data):
             cursor.close()
             conn.close()  # Ensure proper connection closure
 
-def get_test_data(id):
-    try:
-        conn = connect_to_db()
-        cursor = conn.cursor()
-
-        # Use parameterized queries to prevent SQL injection
-        query = "SELECT * FROM test_data WHERE test_id = %s"
-        cursor.execute(query, (id,))
-
-        rows = cursor.fetchall()
-
-        if rows:
-            return rows  # Return the test data if found
-        else:
-            return None  # Indicate that the test data is not found
-
-    except (psycopg2.Error, Exception) as e:
-        print(f"Error retrieving test data: {e}")
-        return None  # Indicate an error occurred
-
-    finally:
-        if conn:
-            cursor.close()
-            conn.close()  # Ensure proper connection closure
 
 def add_users_data(username, form_data):
-    
-    today_date = date.today().strftime('%Y-%m-%d')  # Format: YYYY-MM-DD
-    current_time = datetime.now().strftime('%H:%M:%S')  # Format: HH:MM:SS
+
+    today_date = date.today().strftime("%Y-%m-%d")  # Format: YYYY-MM-DD
+    current_time = datetime.now().strftime("%H:%M:%S")  # Format: HH:MM:SS
 
     try:
         conn = connect_to_db()
@@ -488,7 +495,17 @@ def add_users_data(username, form_data):
         user_id = cursor.fetchone()[0]
 
         query = "INSERT INTO user_data (user_id, test_id, score, time_required, date_stamp, time_stamp ) VALUES (%s, %s, %s, %s, %s, %s)"
-        cursor.execute(query, (user_id, form_data['test_id'], form_data['total_score'], form_data['time_taken'], today_date, current_time ))
+        cursor.execute(
+            query,
+            (
+                user_id,
+                form_data["test_id"],
+                form_data["total_score"],
+                form_data["time_taken"],
+                today_date,
+                current_time,
+            ),
+        )
 
         conn.commit()
 
@@ -500,6 +517,7 @@ def add_users_data(username, form_data):
         if conn:
             cursor.close()
             conn.close()  # Ensure proper connection closure
+
 
 def get_test_details():
     try:
@@ -527,29 +545,29 @@ def get_test_details():
 def add_test_details(form_data):
     conn = connect_to_db()
     cursor = conn.cursor()
-        # Extract data from the form
+    # Extract data from the form
     subject = form_data["subject"]
     test_duration = int(form_data["test_duration"])
     total_marks = int(form_data["total_marks"])
 
-        # test_duration = 60
-        # int(
-        #     form_data["test_duration"]
-        # )  # Assuming test duration is an integer
-        # total_marks = 10
-        # int(
-        #     form_data["total_marks"]
-        # )  # Assuming total marks is an integer
+    # test_duration = 60
+    # int(
+    #     form_data["test_duration"]
+    # )  # Assuming test duration is an integer
+    # total_marks = 10
+    # int(
+    #     form_data["total_marks"]
+    # )  # Assuming total marks is an integer
     total_questions = 0
-        #     form_data["total_questions"]
-        # )  # Assuming total questions is an integer
+    #     form_data["total_questions"]
+    # )  # Assuming total questions is an integer
     try:
 
         # Retrieve the latest test number (assuming test_no is auto-incrementing)
         query = "SELECT MAX(test_no) FROM test_details WHERE subject = %s"
         cursor.execute(query, (subject,))
         latest_test_no = cursor.fetchone()[0]
-        # print(latest_test_no)  
+        # print(latest_test_no)
         # Assuming a single value is returned
 
         # If no test exists yet, start with test_no 1
@@ -561,13 +579,13 @@ def add_test_details(form_data):
         # Use parameterized queries to prevent SQL injection
         query = """ INSERT INTO test_details (subject, test_no, test_duration, total_marks, total_questions) VALUES (%s, %s, %s, %s, %s) """
 
-        parameters = (subject, new_test_no, test_duration, total_marks,total_questions)
+        parameters = (subject, new_test_no, test_duration, total_marks, total_questions)
 
         cursor.execute(query, parameters)
         conn.commit()
- 
-        return True  
-        #Indicate successful insertion
+
+        return True
+        # Indicate successful insertion
 
     except (psycopg2.Error, Exception) as e:
         print(f"Error adding test details: {e}")
@@ -577,6 +595,7 @@ def add_test_details(form_data):
         if conn:
             cursor.close()
             conn.close()  # Ensure proper connection closure
+
 
 def check_details_to_update_table(form_data):
     try:
@@ -607,6 +626,7 @@ def check_details_to_update_table(form_data):
             cursor.close()
             conn.close()  # Ensure proper connection closure
 
+
 def get_question_number_from_test_details(test_id):
     try:
         conn = connect_to_db()
@@ -633,56 +653,6 @@ def get_question_number_from_test_details(test_id):
             cursor.close()
             conn.close()  # Ensure proper connection closure
 
-def add_questions_to_database(form_data):
-    test_id = int(form_data["test_id"])
-    question_no = get_question_number_from_test_details(test_id)  
-    # Use the correct function
-
-    try:
-        # Extract data from the form
-        question = form_data["question"]
-        option1 = form_data["option1"]
-        option2 = form_data["option2"]
-        option3 = form_data["option3"]
-        option4 = form_data["option4"]
-        correct_answer = form_data["correct_answer"]
-
-        conn = connect_to_db()
-        cursor = conn.cursor()
-
-        # Use parameterized queries to prevent SQL injection
-        query = """
-            INSERT INTO test_data (test_id, question_no, question, option1, option2, option3, option4, correct_answer)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        parameters = (
-            test_id,
-            question_no,
-            question,
-            option1,
-            option2,
-            option3,
-            option4,
-            correct_answer,
-        )
-
-        cursor.execute(query, parameters)
-
-        query = "UPDATE test_details SET total_questions = %s WHERE test_id = %s"  # Use correct table name
-        cursor.execute(query, (question_no, test_id))
-
-        conn.commit()
-
-        return True  # Indicate successful insertion
-
-    except (psycopg2.Error, Exception) as e:
-        print(f"Error adding question: {e}")
-        return False  # Indicate an error occurred
-
-    finally:
-        if conn:
-            cursor.close()
-            conn.close()  # Ensure proper connection closure
 
 def view_profile_data(username):
 
@@ -709,6 +679,7 @@ def view_profile_data(username):
         if conn:
             cursor.close()
             conn.close()  # Ensure proper connection closure
+
 
 def update_profile_database(username, form_data):
 
@@ -766,13 +737,14 @@ def update_profile_database(username, form_data):
             cursor.close()
             conn.close()
 
+
 def view_students_list():
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
 
         query = "SELECT * FROM accounts WHERE user_type = %s"
-        cursor.execute(query, ('student',))  # Use parameterized queries
+        cursor.execute(query, ("student",))  # Use parameterized queries
 
         rows = cursor.fetchall()
 
@@ -787,6 +759,7 @@ def view_students_list():
             cursor.close()
             conn.close()  # Ensure proper connection closure
 
+
 def remove_student_DB(user_id):
     try:
         conn = connect_to_db()
@@ -796,7 +769,7 @@ def remove_student_DB(user_id):
         cursor.execute(query, (user_id,))  # Use parameterized queries
 
         # rows = cursor.fetchall()
-
+        conn.commit()
         # return rows  # Return the fetched data
         return True
 
@@ -807,5 +780,233 @@ def remove_student_DB(user_id):
     finally:
         if conn:
             cursor.close()
-            conn.close() 
-    
+            conn.close()
+
+
+def update_subjectDB(form_data):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    subject = form_data["subject"]
+    test_no = int(form_data["test_no"])
+    total_marks = int(form_data["total_marks"])
+    test_duration = int(form_data["test_duration"])
+
+    try:
+
+        query = "UPDATE test_details SET total_marks = %s ,test_duration = %s WHERE subject = %s AND test_no = %s"
+
+        cursor.execute(query, (total_marks, test_duration, subject, test_no))
+        print("query executed Update subject")
+
+        conn.commit()
+        return True
+
+    except Exception as e:
+        print(f"Error occured: {e}")
+        return False
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def remove_subjectDB(form_data):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    subject = form_data["subject"]
+    test_no = int(form_data["test_no"])
+
+    try:
+        query = "DELETE FROM test_details WHERE subject=%s AND test_no=%s"
+        cursor.execute(query, (subject, test_no))
+        conn.commit()
+        return True
+
+    except Exception as e:
+        print(f"Error Occured : {e}")
+        return False
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def add_questionsDB(form_data):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    test_id = get_test_id(form_data)
+
+    question_no = get_question_number_from_test_details(test_id)
+    # Use the correct function
+
+    try:
+        # Extract data from the form
+        question = form_data["question"]
+        option1 = form_data["option1"]
+        option2 = form_data["option2"]
+        option3 = form_data["option3"]
+        option4 = form_data["option4"]
+        correct_answer = form_data["correct_answer"]
+
+        # Use parameterized queries to prevent SQL injection
+        query = """
+            INSERT INTO test_data (test_id, question_no, question, option1, option2, option3, option4, correct_answer)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        parameters = (
+            test_id,
+            question_no,
+            question,
+            option1,
+            option2,
+            option3,
+            option4,
+            correct_answer,
+        )
+
+        cursor.execute(query, parameters)
+
+        query = "UPDATE test_details SET total_questions = %s WHERE test_id = %s"  # Use correct table name
+        cursor.execute(query, (question_no, test_id))
+
+        conn.commit()
+
+        return True  # Indicate successful insertion
+
+    except (psycopg2.Error, Exception) as e:
+        print(f"Error adding question: {e}")
+        return False  # Indicate an error occurred
+
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()  # Ensure proper connection closure
+
+
+def get_subject_namesDB():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    try:
+        query = "SELECT DISTINCT subject FROM test_details"
+        cursor.execute(query)
+        rows = cursor.fetchall()[0]
+
+        # print("rows")
+        # print(rows)
+
+        return rows
+
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def get_all_tests_DB(subject):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    try:
+        query = "SELECT test_id,  test_no, total_marks, test_duration, total_questions FROM test_details WHERE subject = %s"
+        cursor.execute(query, (subject,))
+
+        rows = cursor.fetchall()
+        # print("rows")
+        # print(rows)
+        return rows
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def get_test_data(test_id):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    try:
+        query = "SELECT question, option1, option2, option3, option4, correct_answer FROM test_data WHERE test_id = %s"
+        cursor.execute(query, (test_id,))
+        rows = cursor.fetchall()
+        # print("rows")
+        # print(rows)
+        return rows
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def get_test_basic_details(test_id):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    try:
+        query = "SELECT test_id, test_duration, total_questions FROM test_details WHERE test_id = %s"
+        cursor.execute(query, (test_id,))
+        rows = cursor.fetchone()
+        # print("rows")
+        # print(rows)
+        return rows
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+def add_result_to_user_data_DB(form_data, username):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    test_id = int(form_data["test_id"])
+    time_required = int(form_data["time_taken"])
+    score = int(form_data["total_score"])
+
+    # Get current date and time
+    current_date_time = datetime.now()
+
+    # Extract date and time components
+    current_date = current_date_time.date()
+    current_time = current_date_time.time()
+
+    try:
+        query = "SELECT user_id FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+        user_id = cursor.fetchone()[0]
+        # print("userid : line 954 db :  ")
+        # print(user_id)
+
+        query2 = "INSERT INTO user_data (user_id, test_id, score, time_required, date_stamp, time_stamp) VALUES (%s, %s, %s,%s, %s, %s)"
+
+        cursor.execute(
+            query2, (user_id, test_id, score, time_required, current_date, current_time)
+        )
+        conn.commit()
+
+        return True
+
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()

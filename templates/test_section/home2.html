@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Quiz{% endblock %}
+
+
+{% block middle_content %}
+
+{% for row in data%}
+<form action="/start_test" method="GET">
+    <input type="hidden" name="test_id" value="{{row[0]}}">
+    <h2>Test No.: {{row[1]}}</h2>
+    <p>Total Marks : {{row[2]}}</p>
+    <p>Total Duration : {{row[3]}}</p>
+    <p>Total questions : {{row[4]}}</p>
+    <button type="submit">Start Quiz</button>
+
+</form>
+{% endfor %}
+
+{% endblock %}

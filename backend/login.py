@@ -9,6 +9,7 @@ login_bp = Blueprint('login', __name__)
 
 @login_bp.route('/')
 def index():
+    # return "success"
     if 'username' in session:
         user = session['user']
         if user == 'admin':

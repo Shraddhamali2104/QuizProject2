@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+
+{%block title%}
+{%endblock%}
+{%block middle_content%}
+<div>
+    <h2>Remove Test</h2>
+</div>
+<form action="/remove_subject" method="post">
+    <div>
+        <label for="subject">Enter Subject</label>
+        <input type="text" name="subject" id="subject">
+    </div>
+    <div>
+        <label for="test_no">Enter Test No</label>
+        <input type="text" name="test_no" id="test_no">
+    </div>
+    <a href="/">Home</a>
+    <button type="submit">Remove</button>
+</form>
+
+{%endblock%}
+
+
+   
+  

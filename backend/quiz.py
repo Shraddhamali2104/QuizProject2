@@ -36,6 +36,6 @@ def submit():
     add_users_data(username, request.form)
 
     data = show_users_data('student', username, test_id)
-    # print(data)
+
     return render_template('test_section/result.html', row_data = data, total_correct = total_correct, username = username) 
 

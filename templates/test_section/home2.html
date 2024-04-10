@@ -5,28 +5,36 @@
 
 {% block middle_content %}
 
-{% for row in data%}
 
+{% for row in data %}
+    {% if (loop.index - 1) % 2 == 0 %}
+        <!-- Start a new row for every 2nd card -->
+        <div class="row mt-5">
+    {% endif %}
 
-
-<div class="row" style="width: 18rem;">
-
-    <div class="col-sm-6">
-        <div class="card">
-            <div class="card-body">
+    <div class="col-sm-6 mb-3 mb-sm-0" style="width: 18rem; height: 15rem;">
+        <div class="card" >
+            <div class="card-body"> 
+                <h5 class="card-title">Test No.: {{ row[1] }}</h5>
+                <p class="card-text">Total Marks: {{ row[2] }}</p>
+                <p class="card-text">Total Duration: {{ row[3] }}</p>
+                <p class="card-text">Total questions: {{ row[4] }}</p>
+              
                 <form action="/start_test" method="GET">
-                    <input type="hidden" name="test_id" value="{{row[0]}}">
-                    <h5 class="card-title">Test No.: {{row[1]}}</h5>
-                    <p class="card-text">Total Marks : {{row[2]}}</p>
-                    <p class="card-text">Total Duration : {{row[3]}}</p>
-                    <p class="card-text">Total questions : {{row[4]}}</p>
-
+                    <input type="hidden" name="test_id" value="{{ row[0] }}">
                     <button type="submit" class="btn btn-primary">Start Quiz</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
+
+    {% if loop.last or loop.index % 2 == 0 %}
+        <!-- End the row for every 2nd card or at the last card -->
+        </div>
+    {% endif %}
+
+   
 {% endfor %}
+
 
 {% endblock %}

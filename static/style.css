@@ -17,4 +17,9 @@
   header {
     width: 100%;
   }
+
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+  }
  

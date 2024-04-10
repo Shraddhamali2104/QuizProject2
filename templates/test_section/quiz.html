@@ -67,7 +67,8 @@
           <!-- Start a new button group for every 3rd button -->
           <div class="button-group">
         {% endif %}
-        <button type="button" name="select{{ question_number }}" onclick="goToSelectedQuestion({{ question_number }})">{{ question_number }}</button>
+        <button type="button" name="select{{ question_number }}" onclick="goToSelectedQuestion({{ question_number}})">{{ question_number }}</button>
+
         {% if question_number % 3 == 0 or question_number == basic_data[2] %}
           <!-- End the button group for every 3rd button or at the last button -->
           </div>
@@ -312,7 +313,7 @@
             : '<button type="button" name="prev" onclick="prevQuestion()" disabled> Previous </button>'
           }
     
-          '<button type="button" name="review" onclick="markForReview()"> Review </button>'
+          <button type="button" name="review" onclick="markForReview()"> Review </button>
           
         
             ${index < row_data.length - 1

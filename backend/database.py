@@ -895,7 +895,7 @@ def get_subject_namesDB():
     try:
         query = "SELECT DISTINCT subject FROM test_details"
         cursor.execute(query)
-        rows = cursor.fetchall()[0]
+        rows = cursor.fetchall()
 
         # print("rows")
         # print(rows)

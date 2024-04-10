@@ -15,6 +15,7 @@ def index():
     if "username" in session:
         if request.method == "GET":
             data = get_subject_namesDB()
+            # print(data)
             if data:
                 return render_template("test_section/home.html", data=data)
             else:

@@ -9,17 +9,20 @@
 </style>
 {% endblock %}
 
-{% block left_content %}
+{% block header %}
 
-<div class="container">
-    <p>Hello {{username.capitalize()}},</p>
+<div class="container text-center" >
+    <h4>Hello {{username.capitalize()}},<h4>
     <p>You can see all data of students here </p>
 </div>
 
 {% endblock %}
 
 {% block middle_content %}
-
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <!-- <div class="modal-dialog" role="document"> -->
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
 <div class="container table1 max-width">
     <table>
         <thead>
@@ -59,9 +62,10 @@
         </tbody>
     </table>
 
-    <div>
-        <a href="/admin">Home</a>
-    </div>
+   
+</div>
+</div>
+<!-- </div> -->
 </div>
 
 {% endblock %}

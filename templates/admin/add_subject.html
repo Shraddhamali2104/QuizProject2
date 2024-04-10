@@ -9,9 +9,12 @@
 
 {% block middle_content %}
 <!-- Middle content -->
-
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
 <div class="container">
-    <h1>Adding New Subject Test</h1>
+    <h2>Adding New Subject Test</h2>
     <form action="/add_subject" method="post">
         <div class="form-group">
             <label for="subject">Subject:</label>
@@ -41,9 +44,12 @@
         <!-- <input type="hidden" name="username" value="{{username}}"> -->
 
 
-        <button type="submit" name="submit" >Add Subject</button>
+        <button type="submit" class="btn btn-success" name="submit" >Add Subject</button>
 
     </form>
+</div>
+</div>
+</div>
 </div>
 
 

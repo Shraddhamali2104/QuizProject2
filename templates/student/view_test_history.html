@@ -2,10 +2,17 @@
 
 {% block title %}Quiz{% endblock %}
 
-
+{% block header %}
+<div class="container text-center" >
+  <h2>Your previous test history <h2>
+</div>
+{%endblock%}
 
 {% block middle_content %}
-
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+    <!-- <div class="modal-dialog" role="document"> -->
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
 <div class="container table1 max-width">
 <table>
     <thead>
@@ -37,10 +44,10 @@
         {% endfor %}
     </tbody>
 </table>
-
-<div>
-    <a href="/">Home</a>
 </div>
+</div>
+</div>
+
 </div>
 
 {% endblock %}

@@ -6,11 +6,16 @@
     <!-- Add your CSS styles here -->
 {% endblock %}
 
+{% block header%}
 
+<div class="container text-center" >
+    <h2>User List,<h2>
+</div>
+{%endblock%}
 {% block middle_content %}
     <!-- User List content -->
     <div class="container">
-        <h2>User List</h2>
+       
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -46,8 +51,8 @@
         </table>
     
         <div>
-            <a href="/admin">Home</a>
-            <a href="/remove_student">Remove Student</a>
+           
+            <a href="/remove_student" class="btn btn-danger">Remove Student</a>
         </div>
 
     </div>

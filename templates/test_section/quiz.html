@@ -128,7 +128,7 @@
             <button type="button" name="review" onclick="markForReview()"> Review </button>
     
             <!-- next button -->
-            {% if index < row_data|length - 1 %} <button type="button" name="next" onclick="nextQuestion()">Next</button>
+            {% if index < row_data|length - 1 %}</row_data> <button type="button" name="next" onclick="nextQuestion()">Next</button>
               {% else %}
               <button type="button" name="next" onclick="nextQuestion()" disabled>Next</button>
               {% endif %}
@@ -343,6 +343,24 @@
         calculateTotalScore();
         document.getElementById("quiz-form").submit();
       }
+
+        window.onload = function () {
+            if ("{{ session.get('quiz_submitted') }}" == "True") {
+              var newUrl = "templates\test_section\resubmitquiz.html";
+                history.pushState(null, null, newUrl);
+                window.addEventListener('popstate', function () {
+                  window.location.href = newUrl;
+                });
+                session.pop('quiz_submitted', None);
+            }
+            else{
+              var newUrl = "templates\test_section\resubmitquiz.html";
+              history.pushState(null, null, newUrl);
+              window.addEventListener('popstate',function(){
+                window.location.href = newUrl;
+              })
+            }
+        }
       
     </script>
     

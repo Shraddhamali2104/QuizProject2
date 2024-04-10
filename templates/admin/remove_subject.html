@@ -11,11 +11,13 @@
 {%block middle_content%}
 
 <!-- <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin"> -->
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+id="modalTour">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
 <form action="/remove_subject" method="post">
-    <div class="col-sm-6 ">
+     <!-- <div class="col-sm-6 ">  -->
     <div>
         <label for="subject">Enter Subject</label>
         <input type="text" class="form-control" name="subject" id="subject">
@@ -26,12 +28,14 @@
     </div>
     <br>
     <button type="submit" class="btn btn-danger " >Remove</button>
-    </div>
+    </div> 
 </form>
 </div>
 </div>
 </div>
-<!-- </div> -->
+<!-- </div>  -->
+
+
 
 {%endblock%}
 

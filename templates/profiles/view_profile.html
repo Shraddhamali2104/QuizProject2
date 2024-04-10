@@ -7,7 +7,7 @@
 
 {% block header %}
 
-<div class="container text-center" >
+<div class="container text-center">
     <h3>Welcome {{username.capitalize()}}<h3>
 </div>
 {% endblock%}
@@ -16,65 +16,72 @@
 <!-- Middle content -->
 <div class="container">
     <!-- <div class="container2"> -->
-        
-        <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content rounded-4 shadow">
-                    <div class="modal-header p-5 pb-4 border-bottom-0">
-                 
 
-                    <div class="col-sm-6">   
-                    <div class="profile-details">
-                        <div class="profile-picture">
-                            <!-- <img src="{{url_for('static', filename='/user_images/d.jpg')}}" alt="Profile Image" class="circle"> -->
-                            <img src="{{ url_for('static', filename =  data[7])  }}" alt="Profile Image" class="circle">
-                        </div>
-                       
-                        <form>
-            
-                              
-                            <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="username" name="username" value="{{ data[2] }}" readonly><br>
-            
-                            <label for="first_name">First Name:</label>
-                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ data[3] }}" readonly> <br>
-            
-                            <label for="last_name">Last Name:</label>
-                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ data[4] }}" readonly> <br>
-            
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ data[5] }}" readonly><br>
-            
-                            <label for="phone_number">Phone Number:</label>
-                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ data[6] }}" readonly> <br>
-                           
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" value="{{ '*' * 8 }}"
-                                readonly><br>
-            
-                        </form>              
-                        
+    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+        id="modalSignin">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-header p-5 pb-4 border-bottom-0">
 
-                        <div>
-                            
-                            
-                        
-                            <a href="/edit_profile" class="btn btn-dark">Edit Profile</a>
-                           
-                            <a href="/logout" class="btn btn-danger">Log Out</a>
+
+                    <div class="col-sm-12">
+                        <div class="profile-details ">
+                            <div class="profile-picture">
+                                <img src="{{ url_for('static', filename =  data[7])  }}" alt="Profile Image"
+                                    class="img-thumbnail rounded-circle" style="width: 12rem; height:12rem;">
+                            </div>
+
+
+                            <form>
+
+
+                                <label for="username">Username:</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    value="{{ data[2] }}" readonly><br>
+
+                                <label for="first_name">First Name:</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name"
+                                    value="{{ data[3] }}" readonly> <br>
+
+                                <label for="last_name">Last Name:</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                    value="{{ data[4] }}" readonly> <br>
+
+                                <label for="email">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ data[5] }}"
+                                    readonly><br>
+
+                                <label for="phone_number">Phone Number:</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                    value="{{ data[6] }}" readonly> <br>
+
+                                <label for="password">Password:</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    value="{{ '*' * 8 }}" readonly><br>
+
+                            </form>
+
+
+                            <div>
+
+
+
+                                <a href="/edit_profile" class="btn btn-dark">Edit Profile</a>
+
+                                <a href="/logout" class="btn btn-danger">Log Out</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        </div>
-        </div>
+    </div>
 </div>
 </div>
 
 </div>
 
-   
+
 </div>
 
 

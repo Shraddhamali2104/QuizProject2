@@ -4,19 +4,15 @@
 {% block style_content %}
 
 {% endblock %}
-{% block left_content %}
+
 
 {% block header%}
 <div class="container text-center" >
     <h2>Edit Your profile here<h2>
-    
 </div>
 
 {% endblock%}
-<!-- <div class="container"></div> -->
-<div class="container"> hello, {{username}}</div>
 
-{% endblock %}
 
 {% block middle_content %}
 <!-- Middle content -->
@@ -31,32 +27,32 @@
     <form action="/update_profile" enctype="multipart/form-data" method="POST">
        
 
-        <div class="col-sm-6">
+        <div class="col-sm-12 ">
 
             <label for="username" class="form-label">Username:</label>
             <input type="text" class="form-control" id="username" placeholder="" value="" required="" fdprocessedid="m5hn">
              
-            <label for="first_name" class="form-label">First name:</label>
+            <label for="first_name" class="form-label mt-3">First name:</label>
             <input type="text" class="form-control" id="firstName" placeholder="" value="" required="" fdprocessedid="m5hn">
 
-            <label for="last_name" class="form-label">Last name:</label>
+            <label for="last_name" class="form-label mt-3">Last name:</label>
             <input type="text" class="form-control" id="last_name" placeholder="" value="" required="" fdprocessedid="m5hn">
              
-            <label for="email" class="form-label">Email:</label>
+            <label for="email" class="form-label mt-3">Email:</label>
             <input type="text" class="form-control" id="email" placeholder="" value="" required="" fdprocessedid="m5hn">
              
            
-            <label for="phone_number" class="phone_number">phone_number</label>
+            <label for="phone_number" class="form-label mt-3">Phone Number</label>
             <input type="text" class="form-control" id="phone_number" placeholder="" value="" required="" fdprocessedid="m5hn">
 
-            <label for="password" class="password">Password</label>
+            <label for="password" class="form-label mt-3">Password</label>
             <input type="text" class="form-control" id="password" placeholder="" value="" required="" fdprocessedid="m5hn">
              
              
              
           </div>
           <br>
-        <button type="submit" class="btn btn-success" >Save Changes</button>
+        <button type="submit" class="btn btn-success mt-3" >Save Changes</button>
     </form>
 
     

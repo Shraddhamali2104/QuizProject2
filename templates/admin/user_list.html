@@ -3,7 +3,12 @@
 {% block title %}User List{% endblock %}
 
 {% block style_content %}
-    <!-- Add your CSS styles here -->
+<style>
+    /* Custom CSS for vertical centering */
+    .table td {
+        vertical-align: middle;
+    }
+</style>
 {% endblock %}
 
 {% block header%}
@@ -14,7 +19,7 @@
 {%endblock%}
 {% block middle_content %}
     <!-- User List content -->
-    <div class="container">
+    <div class="container mt-5 text-center justify-content-center">
        
         <table class="table table-bordered">
             <thead>
@@ -34,8 +39,8 @@
           
             <tbody>
                 {% for row in user_data %}
-                    <tr>
-                        <td>{{ loop.index + 1 }}</td>
+                    <tr >
+                        <td>{{ loop.index  }}</td>
                         <td>{{ row[0] }}</td>
                         <!-- <td>{{ row[1] }}</td> -->
                         <td>{{ row[2] }}</td>
@@ -43,8 +48,11 @@
                         <td>{{ row[4] }}</td>
                         <td>{{ row[5] }}</td>
                         <td>{{ row[6] }}</td>
-                        <img src="{{ url_for('static', filename=  row[7]) }}" alt="Profile Image" class="circle">
-                        <!-- <td>{{ row[8] }}</td> -->
+                       <td>
+
+                           <img src="{{ url_for('static', filename=  row[7]) }}" alt="Profile Image" class=" rounded-circle" style="width: 5rem; height: 5rem;">
+                    
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

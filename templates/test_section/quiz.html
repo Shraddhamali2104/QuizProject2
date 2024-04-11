@@ -80,10 +80,10 @@
       <!-- Generate quiz -->
       <div class="container" style="height: auto; width: 40rem">
         <!-- progress bar -->
-        <div class="progress mt-3" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0"
-          aria-valuemax="100">
-          <div class="progress-bar bg-success" style="width: 25%">25%</div>
+        <div class="progress mt-3" id="progress-bar" role="progressbar" aria-label="Success example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div class="progress-bar bg-success" style="width: 100%" id="progress-value"></div>
         </div>
+        
 
         <form id="quiz-form" action="/submit" method="POST">
           <!-- Other form elements -->
@@ -188,29 +188,55 @@
     document.getElementById('total_score').value = totalScore; // Update the total score input field
   }
 
-  // Function to update the countdown timer
-  function updateTimer() {
-    if (timerDuration >= 0) {
-      var minutes = Math.floor(timerDuration / 60);
-      var seconds = timerDuration % 60;
-      document.getElementById("timer").innerText =
-        minutes.toString().padStart(2, "0") +
-        ":" +
-        seconds.toString().padStart(2, "0");//ensure that both minutes and seconds are displayed as two-digit numbers.
-      // document.getElementById("time_taken").value =
-      //   timerDuration.toString();
-      timerDuration--; // Decrease timer duration by 1 second
+  // Set the initial value of the timer in seconds
+const timerDurationInSeconds = timerDuration2;
 
-      if (timerDuration < 0) {
-        // Submit the quiz when timer reaches 00
-        submitQuiz();
-        clearInterval(timerInterval); // Stop the countdown
-      }
+// Calculate the width decrement per second for the progress bar
+const widthDecrementPerSecond = 100 / timerDurationInSeconds;
+
+// Function to update the countdown timer and progress bar
+function updateTimerAndProgressBar() {
+  if (timerDuration >= 0) {
+    // Update timer
+    var minutes = Math.floor(timerDuration / 60);
+    var seconds = timerDuration % 60;
+    document.getElementById("timer").innerText =
+      minutes.toString().padStart(2, "0") +
+      ":" +
+      seconds.toString().padStart(2, "0");
+
+    // Update progress bar
+    const progressBar = document.getElementById('progress-bar');
+    const progressValue = document.getElementById('progress-value');
+
+    let width = parseFloat(progressBar.getAttribute('aria-valuenow'));
+    const widthDecrementPerSecond = 100 / timerDurationInSeconds;
+    width -= widthDecrementPerSecond;
+
+    progressBar.setAttribute('aria-valuenow', width);
+    progressBar.style.width = width + '%';
+    // progressValue.textContent = Math.round(width) + '%';
+
+    // Change progress bar color to red when last 25% is remaining
+    if (width <= 25) {
+      progressBar.classList.remove('bg-success'); // Add red color class
+      progressBar.classList.add('bg-danger'); // Add red color class
+    }
+
+    timerDuration--; // Decrease timer duration by 1 second
+
+    if (timerDuration < 0) {
+      // Submit the quiz when timer reaches 00
+      submitQuiz();
+      clearInterval(timerInterval); // Stop the countdown
     }
   }
+}
 
-  // Update the timer every second
-  var timerInterval = setInterval(updateTimer, 1000);
+// Call the updateTimerAndProgressBar function every second
+const timerInterval = setInterval(updateTimerAndProgressBar, 1000);
+
+
 
   function markAttemptorNotAttempt(bool) {
     let selectedButton = document.querySelector(`[name="select${index + 1}"]`);

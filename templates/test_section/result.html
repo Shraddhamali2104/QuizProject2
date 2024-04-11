@@ -2,25 +2,36 @@
 
 {% block title %}Quiz{% endblock %}
 {% block style_content %}
-<style>
+<!-- <style>
     .max-width {
         width: max-content;
     }
-</style>
+</style> -->
 {% endblock %}
+{% block header%}
+<div class="container text-center" >
+    <h2> Your Total Score </h2>
+    {% if total_score > 5 %}
+<h2> <em> Congratulations!🎉 </em> </p>
+{% else %}
+<h2> Work Hard Next Time !</h2>
+{% endif %}
+</div>
+
+
+
+{% endblock%}
 
 {% block middle_content %}
 
 <!-- Middle content will be replaced with quiz questions -->
-
+<div class="card mt-5">
+    <div class="card-body">
 <div class="container">
 
-    {% if total_score > 5 %}
-    <p> <em> Congratulations! </em> </p>
-{% else %}
-    <p> Work Hard Next Time</p>
-{% endif %}
-<h1>total score = {{ total_score }} </h1>
+<div class="container text-center">
+<h1>Total score = {{ total_score }} </h1>
+</div>
 
 
     <div class="container table1 max-width">
@@ -48,6 +59,8 @@
         </table>
 
     </div>
+</div>
+</div>
 </div>
 </div>
 

@@ -6,10 +6,31 @@
 {% block middle_content %}
 
 {% for row in data %}
-<form action="/quiz" method="post">
-    <input type="hidden" name="subject" value="{{row[0]}}">
-    <button type="submit" class="btn btn-lg btn-primary mt-5 w-100">{{row[0]}}</button>
-</form>
-{% endfor%}
+{% if (loop.index - 1) % 2 == 0 %}
+
+<div class="row mt-5">
+    {% endif %}
+
+
+
+    <div class="col-sm-6 mb-3 mb-sm-0" style="width: 18rem; height: 15rem;">
+        <div class="card " >
+            <div class="card-body"> 
+                <h5 class="card-title"> {{ row[0] }} </h5>
+                <p class="card-text">Click on Choose test button to go to see all the Test listed in {{row[0]}} subject.</p>
+                <form action="/quiz" method="post">
+                    <input type="hidden" name="subject" value="{{ row[0] }}">
+                    <button type="submit" class="btn btn-primary">Choose Test</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% if loop.last or loop.index % 2 == 0 %}
+    <!-- End the button group for every 2nd button or at the last button -->
+</div>
+{% endif %}
+{% endfor %}
+
 
 {% endblock %}

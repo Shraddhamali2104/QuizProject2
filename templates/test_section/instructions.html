@@ -1,36 +1,41 @@
 {% extends 'base.html' %}
 
 {% block title %}Quiz{% endblock %}
+{% block header%}
+<div class="container text-center" >
+    <h2>📌 Instructions 📌</h2>
+</div>
 
+{% endblock%}
 
 {% block middle_content %}
 
-<h2>This is instructions Page</h2>
+<div class="card mt-5">
+    <div class="card-body">
+        <p>1.Ensure you are in a quiet and distraction-free environment.</p>
+        <p>2.Make sure you have a stable internet connection.</p>
+        <p>3.Keep an eye on the timer displayed on the screen during the test and pace yourself accordingly.</p>
+        <p>4.Read each question carefully and answer to the best of your ability.</p>
+        <p>5.This test is designed to assess your knowledge and skills honestly.
+            Do not use any unauthorized aids, resources, or assistance during the test.</p>
+ 
+        
+        
+        
+        
+        
+        <form action="/start_test" method="POST">
+            <input type="hidden" name="test_id" value="{{test_id}}">
+            
+            <div class="container text-center" >
+            <button type="submit" class="btn btn-success">Start Quiz</button>
+            </div>
+        
+        </form>
+    </div>
+  </div>
 
-<p>Check whether you should go directly to an exam hall or a waiting room. 4. Do not bring any unauthorized material (e.g. written notes, notes in dictionaries, paper, and sticky tape eraser,). Pencil cases and glasses cases must not be taken to your desks.
-    Read Each Question Carefully: Take your time to understand what each question is asking before selecting your answer.
 
-Choose the Best Answer: Select the option that you believe best fits the question. There may be multiple correct answers, but choose the one that is most appropriate.
-
-Answer Every Question: Try to answer every question to the best of your ability. If you're unsure, make an educated guess.
-
-Be Mindful of Time: Keep an eye on the time remaining for the quiz. Pace yourself to ensure you have enough time to answer all questions.
-
-Review Your Answers: Before submitting your quiz, review your answers to check for any mistakes or omissions.
-
-Submit Your Quiz: Once you're satisfied with your answers, submit your quiz. Remember, once submitted, you won't be able to change your answers.
-
-Enjoy the Challenge: Approach the quiz with a positive mindset. Treat it as an opportunity to test your knowledge and learn new things.
-</p>
-
-
-
-<form action="/start_test" method="POST">
-    <input type="hidden" name="test_id" value="{{test_id}}">
-    
-    <button type="submit">Start Quiz</button>
-
-</form>
 
 
 {% endblock %}

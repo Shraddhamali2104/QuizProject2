@@ -1,23 +1,41 @@
 {% extends 'base.html' %}
 
 {% block title %}Quiz{% endblock %}
+{% block header%}
+<div class="container text-center" >
+    <h2>📌 Instructions 📌</h2>
+</div>
 
+{% endblock%}
 
 {% block middle_content %}
 
-<h2>This is instructions Page</h2>
+<div class="card mt-5">
+    <div class="card-body">
+        <p>1.Ensure you are in a quiet and distraction-free environment.</p>
+        <p>2.Make sure you have a stable internet connection.</p>
+        <p>3.Keep an eye on the timer displayed on the screen during the test and pace yourself accordingly.</p>
+        <p>4.Read each question carefully and answer to the best of your ability.</p>
+        <p>5.This test is designed to assess your knowledge and skills honestly.
+            Do not use any unauthorized aids, resources, or assistance during the test.</p>
+ 
+        
+        
+        
+        
+        
+        <form action="/start_test" method="POST">
+            <input type="hidden" name="test_id" value="{{test_id}}">
+            
+            <div class="container text-center" >
+            <button type="submit" class="btn btn-success">Start Quiz</button>
+            </div>
+        
+        </form>
+    </div>
+  </div>
 
-<p>Check whether you should go directly to an exam hall or a waiting room. 4. Do not bring any unauthorized material (e.g. written notes, notes in dictionaries, paper, and sticky tape eraser,). Pencil cases and glasses cases must not be taken to your desks.
-</p>
 
-
-
-<form action="/start_test" method="POST">
-    <input type="hidden" name="test_id" value="{{test_id}}">
-    
-    <button type="submit">Start Quiz</button>
-
-</form>
 
 
 {% endblock %}

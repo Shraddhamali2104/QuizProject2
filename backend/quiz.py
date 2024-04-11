@@ -49,7 +49,7 @@ def start_test():
     else:
         return redirect(url_for('login.index'))
 
-@quiz_bp.route("/submit", methods = ['GET', 'POST'])
+@quiz_bp.route("/submit", methods=['GET', 'POST'])
 def submit():
     if 'username' in session:
         if request.method == 'POST':
@@ -58,13 +58,14 @@ def submit():
             test_id = int(request.form['test_id'])
 
             add_result_to_user_data_DB(request.form, username)
-            data = show_users_data(session['user'], username, test_id )
-            if(data):
-                return render_template("test_section/result.html", total_score = total_score, data = data )
+            data = show_users_data(session['user'], username, test_id)
+            if data:
+                session['quiz_submitted'] = True  # Set session variable indicating quiz submission
+                return render_template("test_section/result.html", total_score=total_score, data=data), session
             else:
-                return "unable to submit result"
-
+                return "Unable to submit result"
         else:
             pass
     else:
         return redirect(url_for('login.index'))
+    

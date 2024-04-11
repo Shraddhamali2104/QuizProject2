@@ -1,6 +1,22 @@
 {% extends 'base.html' %}
 
 {% block title %}Quiz{% endblock %}
+{% block style_content %}
+<style>
+    .max-width {
+        width: max-content;
+    }
+    .table1 th,
+    .table1 td {
+        border: 1px solid #ddd; /* Add border to table cells */
+        padding: 8px; /* Add padding to table cells for better readability */
+    }
+    .table1 tbody tr:hover {
+        background-color: rgb(136, 224, 224); /* Change background color on hover */
+    }
+    
+</style>
+{% endblock %}
 
 {% block header %}
 <div class="container text-center" >

@@ -6,12 +6,21 @@
     .max-width {
         width: max-content;
     }
+    .table1 th,
+    .table1 td {
+        border: 1px solid #ddd; /* Add border to table cells */
+        padding: 8px; /* Add padding to table cells for better readability */
+    }
+    .table1 tbody tr:hover {
+        background-color: aqua; /* Change background color on hover */
+    }
+    
 </style>
 {% endblock %}
 
 {% block header %}
 
-<div class="container text-center" >
+<div class="container text-center">
     <h4>Hello {{username.capitalize()}},<h4>
     <p>You can see all data of students here </p>
 </div>
@@ -20,52 +29,47 @@
 
 {% block middle_content %}
 <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
-    <!-- <div class="modal-dialog" role="document"> -->
-        <div class="modal-content rounded-4 shadow">
-            <div class="modal-header p-5 pb-4 border-bottom-0">
-<div class="container table1 max-width">
-    <table>
-        <thead>
-            <tr>
-                <th>Serial No.</th>
-                <th>Username</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Subject</th>
-                <th>Test Number</th>
-                <th>User Score</th>
-                <th>Total Score</th>
-                <th>Time Taken by User</th>
-                <th>Test Duration</th>
-                <th>Date</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in row_data %}
-            <tr>
-                <td>{{ row[0] }}</td>
-                <td>{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
-                <td>{{ row[3] }}</td>
-                <td>{{ row[4] }}</td>
-                <td>{{ row[5] }}</td>
-                <td>{{ row[6] }}</td>
-                <td>{{ row[7] }}</td>
-                <td>{{ row[8] }}</td>
-                <td>{{ row[9] }}</td>
-                <td>{{ row[10] }}</td>
-                <td>{{ row[11] }}</td>
-
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-   
+    <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+            <div class="container table1 max-width">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serial No.</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Subject</th>
+                            <th>Test Number</th>
+                            <th>User Score</th>
+                            <th>Total Score</th>
+                            <th>Time Taken by User</th>
+                            <th>Test Duration</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in row_data %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>{{ row[5] }}</td>
+                            <td>{{ row[6] }}</td>
+                            <td>{{ row[7] }}</td>
+                            <td>{{ row[8] }}</td>
+                            <td>{{ row[9] }}</td>
+                            <td>{{ row[10] }}</td>
+                            <td>{{ row[11] }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-<!-- </div> -->
-</div>
-
 {% endblock %}

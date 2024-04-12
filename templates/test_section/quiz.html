@@ -58,16 +58,13 @@
     width: 50px;
     height: 50px;
     border: 1px solid white;
-    background-color: gray;
+    background-color: firebrick;
     color: black;
     margin: 20px;
     /* Adjust spacing between buttons */
   }
 
 
-  .left-mcq-panel button.notattempted {
-    background-color: firebrick;
-  }
 
   .left-mcq-panel button.attempted {
     background-color: yellowgreen;
@@ -309,21 +306,24 @@
 
 
 
-  function markAttemptorNotAttempt(bool) {
+  function markAttempted() {
     let selectedButton = document.querySelector(`[name="select${index + 1}"]`);
-    selectedButton.classList.remove('active');//to change the visual appearance or behavior of the button on the webpage.
+  
+    //to change the visual appearance or behavior of the button on the webpage.
 
-    if (bool) {
-      selectedButton.classList.add('attempted');
-    }
-    else {
-      selectedButton.classList.add('notattempted');
-    }
+    selectedButton.classList.add('attempted');
+
+
   }
 
   function markActive(markIndex) {
     let selectedButton = document.querySelector(`[name="select${markIndex + 1}"]`);
     selectedButton.classList.add('active');
+  }
+
+  function removeActive(Index){
+    let selectedButton = document.querySelector(`[name="select${Index + 1}"]`);
+    selectedButton.classList.remove('active');
   }
 
   function markForReview() {
@@ -333,14 +333,9 @@
 
   // Function to move to the next question
   function nextQuestion() {
-    let selectedAnswer = document.querySelector(`input[name="answer"]:checked`);
-    if (selectedAnswer) {
-      markAttemptorNotAttempt(true);
-      updateSelectedAnswer(index, selectedAnswer.value);
-    } else {
-      markAttemptorNotAttempt(false);
-    }
+    
     if (index < row_data.length - 1) {
+      removeActive(index);
       index++; // Increase the question index
       displayQuestion();
       // Add 'active' class to the clicked button
@@ -350,14 +345,9 @@
 
   // Function to move to the previous question
   function prevQuestion() {
-    let selectedAnswer = document.querySelector(`input[name="answer"]:checked`);
-    if (selectedAnswer) {
-      markAttemptorNotAttempt(true);
-      updateSelectedAnswer(index, selectedAnswer.value);
-    } else {
-      markAttemptorNotAttempt(false);
-    }
+   
     if (index > 0) {
+      removeActive(index);
       index--; // Decrease the question index
       displayQuestion();
       // Add 'active' class to the clicked button
@@ -366,21 +356,13 @@
   }
 
   function goToSelectedQuestion(goToIndex) {
-    let selectedAnswer = document.querySelector(`input[name="answer"]:checked`);
-    if (selectedAnswer) {
-      markAttemptorNotAttempt(true);
-      updateSelectedAnswer(index, selectedAnswer.value);
-
-    } else {
-      markAttemptorNotAttempt(false);
-    }
+    removeActive(index);
 
     index = goToIndex - 1;
     displayQuestion();
 
     // Add 'active' class to the clicked button
     markActive(index);
-
   }
 
   // Function to display the current question
@@ -449,20 +431,15 @@
 
     // Activate the clicked button
     button.classList.toggle('button-effect');
+    updateSelectedAnswer(index, button.value);
+    
+    markAttempted();
+
   }
 
   // Function to submit the quiz
   function submitQuiz() {
-    // console.log("submitQuiz() function called.");
-    let selectedAnswer = document.querySelector(`input[name="answer"]:checked`);
-    if (selectedAnswer) {
-      markAttemptorNotAttempt(true);
-      updateSelectedAnswer(index, selectedAnswer.value);
-
-    } else {
-      markAttemptorNotAttempt(false);
-    }
-
+   
     document.getElementById("time_taken").value = (timerDuration2 - timerDuration).toString();
     // time_taken = document.getElementById("time_taken").value;
     //final logic to submit quiz

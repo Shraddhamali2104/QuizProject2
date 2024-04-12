@@ -986,6 +986,8 @@ def add_result_to_user_data_DB(form_data, username):
     # Extract date and time components
     current_date = current_date_time.date()
     current_time = current_date_time.time()
+    print("time")
+    print(current_time)
 
     try:
         query = "SELECT user_id FROM accounts WHERE username = %s"

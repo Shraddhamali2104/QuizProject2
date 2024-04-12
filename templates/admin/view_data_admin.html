@@ -6,15 +6,19 @@
     .max-width {
         width: max-content;
     }
+
     .table1 th,
     .table1 td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells for better readability */
+        border: 1px solid #ddd;
+        /* Add border to table cells */
+        padding: 8px;
+        /* Add padding to table cells for better readability */
     }
+
     .table1 tbody tr:hover {
-        background-color: rgb(136, 224, 224); /* Change background color on hover */
+        background-color: rgb(136, 224, 224);
+        /* Change background color on hover */
     }
-    
 </style>
 {% endblock %}
 
@@ -22,54 +26,52 @@
 
 <div class="container text-center">
     <h4>Hello {{username.capitalize()}},<h4>
-    <p>You can see all data of students here </p>
+            <p>You can see all data of students here </p>
 </div>
 
 {% endblock %}
 
 {% block middle_content %}
-<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
-    <div class="modal-content rounded-4 shadow">
-        <div class="modal-header p-5 pb-4 border-bottom-0">
-            <div class="container table1 max-width">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Serial No.</th>
-                            <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Subject</th>
-                            <th>Test Number</th>
-                            <th>User Score</th>
-                            <th>Total Score</th>
-                            <th>Time Taken by User</th>
-                            <th>Test Duration</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for row in row_data %}
-                        <tr>
-                            <td>{{ row[0] }}</td>
-                            <td>{{ row[1] }}</td>
-                            <td>{{ row[2] }}</td>
-                            <td>{{ row[3] }}</td>
-                            <td>{{ row[4] }}</td>
-                            <td>{{ row[5] }}</td>
-                            <td>{{ row[6] }}</td>
-                            <td>{{ row[7] }}</td>
-                            <td>{{ row[8] }}</td>
-                            <td>{{ row[9] }}</td>
-                            <td>{{ row[10] }}</td>
-                            <td>{{ row[11] }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
+<div class="card mt-5">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Serial No.</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Test Number</th>
+                    <th scope="col">User Score</th>
+                    <th scope="col">Total Score</th>
+                    <th scope="col">Time Taken by User</th>
+                    <th scope="col">Test Duration</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in row_data %}
+                <tr>
+                    <td  scope="row">{{ row[0] }}</td>
+                    <td scope="row">{{ row[1] }}</td>
+                    <td scope="row">{{ row[2] }}</td>
+                    <td scope="row">{{ row[3] }}</td>
+                    <td scope="row">{{ row[4] }}</td>
+                    <td scope="row">{{ row[5] }}</td>
+                    <td scope="row">{{ row[6] }}</td>
+                    <td scope="row">{{ row[7] }}</td>
+                    <td scope="row">{{ row[8] }}</td>
+                    <td scope="row">{{ row[9] }}</td>
+                    <td scope="row">{{ row[10] }}</td>
+                    <td scope="row">{{ row[11] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
+
 {% endblock %}

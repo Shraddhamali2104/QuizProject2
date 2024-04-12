@@ -9,18 +9,27 @@
 {% endblock %}
 
 {% block middle_content %}
-<div class="container">
 
-    <form action="/remove_student" method="post">
 
-        <label for="textbox">Enter User Id to delete</label>
-        <input type="text" name="user_id" >
 
-        <button type="submit">Remove Student</button>
-    </form>
+<div class="modal modal-sheet position-static d-block bg-body-secondary " tabindex="-1" role="dialog"
+    id="modalTour">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-4 shadow">
+            <div class="modal-header p-5 pb-4 border-bottom-0">
+                
+                <form action="/remove_student" method="post">
 
-    <div>
-        <a href="/">Home</a>
+                    <label for="textbox">Enter User Id to delete</label>
+                    <input type="text" class="form-control" name="user_id" id="textbox" >
+            
+                    <button type="submit" class="btn btn-danger mt-3" >Remove Student</button>
+                </form>
+            
+               
+
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

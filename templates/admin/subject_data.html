@@ -1,78 +1,53 @@
 {% extends "base.html" %}
 
 {% block title %}
-    main template 
+main template
 {% endblock %}
 
 {% block style_content %}
-<style>
-    .max-width {
-        width: max-content;
-    }
-    .table1 th,
-    .table1 td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells for better readability */
-    }
-    .table1 tbody tr:hover {
-        background-color: rgb(136, 224, 224); /* Change background color on hover */
-    }
-    
-</style>
+
 {% endblock %}
 {% block header %}
-<div class="container text-center" >
+<div class="container text-center">
     <h2> Test Data Available </h2>
-  </div>
+</div>
 {% endblock %}
 
 {% block middle_content %}
-<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content rounded-4 shadow">
-            <div class="modal-header p-5 pb-4 border-bottom-0">
-<div class="container table1 table2">
-    
-    <table> 
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>Test Number</th>
-                <th>Test Duration</th>
-                <th>Total Marks</th>
-                <th>Total Questions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
-            <tr>
-                <td>{{ item[1] }}</td>
-                <td>{{ item[2] }}</td>
-                <td>{{ item[3] }}</td>
-                <td>{{ item[4] }}</td>
-                <td>{{ item[5] }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-<br>
-    <div class="container text-center">
-        <a href="/add_subject" class="btn btn-success">Add Subject</a>
-        <br>
-        <br>
-        <a href="/update_subject" class="btn btn-primary">Update Subject Details</a>
-        <br>
-        <br>
-        <a href="/remove_subject" class="btn btn-danger">Remove Subject</a>
-        
+
+<div class="card mt-5">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Test Number</th>
+                    <th scope="col">Test Duration</th>
+                    <th scope="col">Total Marks</th>
+                    <th scope="col">Total Questions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr>
+                    <td scope="row">{{ item[1] }}</td>
+                    <td scope="row">{{ item[2] }}</td>
+                    <td scope="row">{{ item[3] }}</td>
+                    <td scope="row">{{ item[4] }}</td>
+                    <td scope="row">{{ item[5] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    
-</div>
-</div>
-</div>
-</div>
 </div>
 
+
+<div class="btn-group btn-group-lg mt-5" role="group" aria-label="Large button group">
+    <a href="/add_subject" class="btn btn-outline-success">Add Subject</a>
+
+    <a href="/update_subject" class="btn btn-outline-primary">Update Subject Details</a>
+
+    <a href="/remove_subject" class="btn btn-outline-danger">Remove Subject</a>
+</div>
 {% endblock %}
-
-

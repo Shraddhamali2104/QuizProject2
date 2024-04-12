@@ -3,71 +3,65 @@
 {%block title%}
 {%endblock%}
 {% block header %}
-<div class="container text-center mt=0" >
+<div class="container text-center mt=0">
     <h2>Add Questions Here..</h2>
 </div>
 {%endblock%}
 {%block middle_content%}
 
-<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+    id="modalSignin">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
-<form action="/add_questions" method="post">
-    <!-- <div class="col-sm-6"> -->
-    <div>
-        <label for="subject">Enter Subject</label>
-        <input type="text" class="form-control" name="subject" id="subject">
-    </div>
-    <div>
-        <label for="test_no">Enter Test No</label>
-        <input type="text" class="form-control"  name="test_no" id="test_no">
-    </div>
+                <form action="/add_questions" method="post" class="w-100">
+                 
+                    <div>
+                        <label for="subject">Enter Subject</label>
+                        <input type="text" class="form-control" name="subject" id="subject">
+                    </div>
+                    <div>
+                        <label for="test_no">Enter Test No</label>
+                        <input type="text" class="form-control" name="test_no" id="test_no">
+                    </div>
 
-    <div>
-        <label for="question">Enter question</label>
-        <input type="text" class="form-control" name="question" id="question">
-    </div>
+                    <div >
+                        <label for="que stion">Enter question</label>
+                        <input type="text" class="form-control" name="question" id="question">
+                    </div>
 
-    <div>
-        <label for="option1">Enter Option 1</label>
-        <input type="text" class="form-control" name="option1" id="option2">
-    </div>
-    <div>
-        <label for="option2">Enter Option 2</label>
-        <input type="text" class="form-control" name="option2" id="option2">
-    </div>
+                    <div>
+                        <label for="option1">Enter Option 1</label>
+                        <input type="text" class="form-control" name="option1" id="option2">
+                    </div>
+                    <div>
+                        <label for="option2">Enter Option 2</label>
+                        <input type="text" class="form-control" name="option2" id="option2">
+                    </div>
 
-    <div>
-        <label for="option3">Enter Option 3</label>
-        <input type="text" class="form-control" name="option3" id="option3">
-    </div>
+                    <div>
+                        <label for="option3">Enter Option 3</label>
+                        <input type="text" class="form-control" name="option3" id="option3">
+                    </div>
 
-    <div>
-        <label for="option4">Enter Option 4</label>
-        <input type="text" class="form-control" name="option4" id="option4">
-    </div>
+                    <div>
+                        <label for="option4">Enter Option 4</label>
+                        <input type="text" class="form-control" name="option4" id="option4">
+                    </div>
 
-    <div>
-        <label for="correct_answer">correct_answer</label>
-        <input type="text" class="form-control" name="correct_answer" id="correct_answer">
+                    <div>
+                        <label for="correct_answer">correct_answer</label>
+                        <input type="text" class="form-control" name="correct_answer" id="correct_answer">
+                    </div>
+  
+                    <br>
+
+                    <button type="submit" class="btn btn-success">Add Questions</button>
+                </form>
+            </div>
+        </div>
     </div>
-<!-- </div> -->
-    <br>
-    
-    <button type="submit" class="btn btn-success" >Add Questions</button>
-</form>
-</div>
-</div>
-</div>
 </div>
 
 
 {%endblock%}
-
-
-
-   
-  
-   
-  

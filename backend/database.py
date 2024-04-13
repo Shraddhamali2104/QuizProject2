@@ -378,6 +378,71 @@ def signup_user(form_data, image_path):
             cursor.close()
             conn.close()
 
+def verify_username_email(username, email):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "SELECT email FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+
+        row = cursor.fetchone()
+
+        if(row[0] == email):
+            return True
+        else:
+            return False
+
+    except (psycopg2.Error, Exception) as e:
+        # Handle potential database errors and generic exceptions
+        print("Error occurred:", e)
+        return False
+
+    finally:
+        # Ensure proper connection closure even on exceptions
+        if conn:
+            cursor.close()
+            conn.close()
+
+def update_password(form_data):
+    username = form_data['username']
+    password1 = form_data['password1']
+    password2 = form_data['password2']
+
+    if (password1 != password2):
+        return False
+
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "SELECT password_salt FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+        row = cursor.fetchone()
+
+        stored_salt = row[0]  # Assuming stored salt is the first element in the row
+
+        hashed_password = hash_password(password1, stored_salt)
+
+        query2 = "UPDATE accounts SET password_hash = %s WHERE username = %s;"
+        cursor.execute(query2, (hashed_password, username))
+
+        print("passwrod updated")
+        conn.commit()
+
+        return True
+
+    except (psycopg2.Error, Exception) as e:
+        # Handle potential database errors and generic exceptions
+        print("Error occurred:", e)
+        return False
+
+    finally:
+        # Ensure proper connection closure even on exceptions
+        if conn:
+            cursor.close()
+            conn.close()
+
 
 def show_users_data(user, username, test_id=0):
     try:

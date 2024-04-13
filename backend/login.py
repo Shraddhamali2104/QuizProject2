@@ -1,5 +1,5 @@
 from flask import Flask, redirect, url_for, request, Blueprint, render_template, session
-from backend.database import setup_initial_tables, insert_initial_data, authenticate_user, signup_user
+from backend.database import setup_initial_tables, insert_initial_data, authenticate_user, signup_user, verify_username_email, update_password
 import os
 
 images_folder_DB = "/user_images"  # Replace with your images folder path
@@ -89,3 +89,32 @@ def logout():
     session.pop('username', None)
     session.pop('user', None)
     return render_template('main.html')
+
+@login_bp.route('/forgot_password', methods = ['GET', 'POST'])
+def forgot_password():
+    if request.method == 'GET':
+        return render_template('login_signup_section/forgot_pass1.html')
+    else:
+        username = request.form['username']
+        email = request.form['email']
+
+        status = verify_username_email(username, email)
+        if status:
+            return render_template('login_signup_section/forgot_pass2.html', username = username)
+        else:
+            return render_template('login_signup_section/forgot_pass1.html', error = "Unable to match username and Email, Try again")
+
+@login_bp.route('/forgot_password2', methods = ['POST'])
+def forgot_password2():
+    if request.method == 'POST':
+        status = update_password(request.form)
+        if status:
+            user = session['user']  
+            if user in ['student', 'admin', 'guest']:
+                return render_template('login_signup_section/login.html', user = user)
+            else:
+                return redirect(url_for('login.index'))
+        else:
+            return render_template('login_signup_section/forgot_pass2.html', error = "Unable to do Forgot Password, Try again")
+    else:
+        return "some error in login/forgot_password2 route"

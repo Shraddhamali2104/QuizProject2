@@ -1,43 +1,40 @@
-{% extends 'base.html' %}
-{% block title %}Quiz{% endblock %}
-
-{% block style_content %}
+{% extends 'base.html' %} {% block title %}Quiz{% endblock %} {% block
+style_content %}
 <style>
   /* CSS */
-.button-52 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  letter-spacing: 1px;
-  padding: 13px 20px 13px;
-  outline: 0;
-  border: 1px solid black;
-  cursor: pointer;
-  position: relative;
-  background-color: #58c2bf;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  border-radius: 0.5rem;
-}
-
-
-.button-effect {
-  color: white;
-  background-color: #07615e;
-  /* width: 100%; */
-  z-index: 5;
-  /* position: relative; */
-  /* height: 100%; */
-  /* top: 7px;
-  left: 7px; */
-  /* transition: 0.01s; */
-}
-
-@media (min-width: 768px) {
   .button-52 {
-    padding: 13px 50px 13px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    padding: 13px 20px 13px;
+    outline: 0;
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;
+    background-color: #58c2bf;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    border-radius: 0.5rem;
   }
-}
+
+  .button-effect {
+    color: white;
+    background-color: #07615e;
+    /* width: 100%; */
+    z-index: 5;
+    /* position: relative; */
+    /* height: 100%; */
+    /* top: 7px;
+  left: 7px; */
+    /* transition: 0.01s; */
+  }
+
+  @media (min-width: 768px) {
+    .button-52 {
+      padding: 13px 50px 13px;
+    }
+  }
 
   #timer {
     z-index: 5;
@@ -64,84 +61,98 @@
     /* Adjust spacing between buttons */
   }
 
-
-
   .left-mcq-panel button.attempted {
     background-color: yellowgreen;
   }
 
   .left-mcq-panel button.review {
     background-color: darkslateblue;
-
   }
 
   .left-mcq-panel button.active {
     background-color: green !important;
   }
-
-  
 </style>
-{% endblock %}
-
-{% block middle_content %}
+{% endblock %} {% block middle_content %}
 <!-- left block content -->
 
 <div class="container text-center mt-5">
-  <div class="row" style="height: 40rem;">
-
-    <div class="col-md-4 card shadow d-flex justify-content-center align-items-center" style="height: 100%;">
+  <div class="row" style="height: 40rem">
+    <div
+      class="col-md-4 card shadow d-flex justify-content-center align-items-center"
+      style="height: 100%"
+    >
       <!-- Hidden input field to pass the updated timer value -->
 
-      <input type="hidden" id="index" value="{{ index }}">
-      <div id="row_data" hidden> {{ row_data|tojson|safe }} </div>
+      <input type="hidden" id="index" value="{{ index }}" />
+      <div id="row_data" hidden>{{ row_data|tojson|safe }}</div>
 
       <div class="left-mcq-panel">
-        <div class="d-flex justify-content-center " style="width: 100%;">
-          <div class="timer" id="timer"> 00:00 </div>
+        <div class="d-flex justify-content-center" style="width: 100%">
+          <div class="timer" id="timer">00:00</div>
         </div>
         <!-- Loop through the number of questions -->
-        {% for question_number in range(1, basic_data[2] + 1) %}
-        {% if (question_number - 1) % 3 == 0 %}
+        {% for question_number in range(1, basic_data[2] + 1) %} {% if
+        (question_number - 1) % 3 == 0 %}
         <!-- Start a new button group for every 3rd button -->
         <div class="button-group">
           {% endif %}
-          <button type="button" name="select{{ question_number }}"
-            onclick="goToSelectedQuestion({{ question_number}})">{{
-            question_number }}</button>
+          <button
+            type="button"
+            name="select{{ question_number }}"
+            onclick="goToSelectedQuestion({{ question_number}})"
+          >
+            {{ question_number }}
+          </button>
 
           {% if question_number % 3 == 0 or question_number == basic_data[2] %}
           <!-- End the button group for every 3rd button or at the last button -->
         </div>
-        {% endif %}
-        {% endfor %}
+        {% endif %} {% endfor %}
       </div>
-
     </div>
 
-    <div class="col-md-8 card shadow d-flex flex-column justify-content-evenly align-items-center"
-      style="height: 100%;">
+    <div
+      class="col-md-8 card shadow d-flex flex-column justify-content-evenly align-items-center"
+      style="height: 100%"
+    >
       <!-- Generate quiz -->
 
       <!-- progress bar -->
-     
 
-      <div class="progress w-100 " role="progressbar" aria-label="Basic example" aria-valuemin="0" aria-valuemax="100" style="height: 2rem;">
-        <div class="progress-bar bg-success h-100 progress-bar-striped progress-bar-animated" id="progress-bar"  aria-valuenow="100" style="width: 100%"></div>
+      <div
+        class="progress w-100"
+        role="progressbar"
+        aria-label="Basic example"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        style="height: 2rem"
+      >
+        <div
+          class="progress-bar bg-success h-100 progress-bar-striped progress-bar-animated"
+          id="progress-bar"
+          aria-valuenow="100"
+          style="width: 100%"
+        ></div>
       </div>
 
-      <div >
+      <div>
         <form id="quiz-form" action="/submit" method="POST">
           <!-- Other form elements -->
 
-          <input type="hidden" name="time_taken" id="time_taken" value="{{ basic_data[1] }}" />
+          <input
+            type="hidden"
+            name="time_taken"
+            id="time_taken"
+            value="{{ basic_data[1] }}"
+          />
           <input type="hidden" id="total_score" name="total_score" value="0" />
           <input type="hidden" name="test_id" value="{{basic_data[0]}}" />
 
           {% if row_data %}
-          <div id="question-container" >
+          <div id="question-container">
             <div>
-              <p>Question Number: <b> {{ index + 1 }} </b>
-              </p>
+              <p>Question Number: <b> {{ index + 1 }} </b></p>
             </div>
 
             <div class="mb-5">
@@ -150,74 +161,156 @@
             <!-- Display the question -->
 
             <!-- Hidden input field to store the correct answer -->
-            <input type="hidden" name="correct_answer" value="{{ row_data[index][5] }}" />
+            <input
+              type="hidden"
+              name="correct_answer"
+              value="{{ row_data[index][5] }}"
+            />
 
             <div class="container">
               <div class="row mt-4 mb-2">
                 <div class="col-6">
-                  <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option1" name="answer" value="{{ row_data[index][1] }}" onclick="toggleButton(this)" />
+                  <div
+                    class="d-flex justify-content-center align-items-center h-100"
+                  >
+                    <input
+                      type="button"
+                      class="button-52 btn-block w-100"
+                      id="option1"
+                      name="answer"
+                      value="{{ row_data[index][1] }}"
+                      onclick="toggleButton(this)"
+                    />
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option2" name="answer" value="{{ row_data[index][2] }}" onclick="toggleButton(this)" />
+                  <div
+                    class="d-flex justify-content-center align-items-center h-100"
+                  >
+                    <input
+                      type="button"
+                      class="button-52 btn-block w-100"
+                      id="option2"
+                      name="answer"
+                      value="{{ row_data[index][2] }}"
+                      onclick="toggleButton(this)"
+                    />
                   </div>
                 </div>
               </div>
               <div class="row mt-3 mb-2">
                 <div class="col-6">
-                  <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option3" name="answer" value="{{ row_data[index][3] }}" onclick="toggleButton(this)" />
+                  <div
+                    class="d-flex justify-content-center align-items-center h-100"
+                  >
+                    <input
+                      type="button"
+                      class="button-52 btn-block w-100"
+                      id="option3"
+                      name="answer"
+                      value="{{ row_data[index][3] }}"
+                      onclick="toggleButton(this)"
+                    />
                   </div>
                 </div>
                 <div class="col-6">
-                  <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer" value="{{ row_data[index][4] }}" onclick="toggleButton(this)" />
+                  <div
+                    class="d-flex justify-content-center align-items-center h-100"
+                  >
+                    <input
+                      type="button"
+                      class="button-52 btn-block w-100"
+                      id="option4"
+                      name="answer"
+                      value="{{ row_data[index][4] }}"
+                      onclick="toggleButton(this)"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="d-flex justify-content-center align-items-center" style="width: 100%;">
-
-              <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-
-                <div class="btn-group btn-group-lg m-5" role="group" aria-label="Basic outlined example">
-                  <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" {% if index
-                    <=0 %} disabled {% endif %}>Previous</button>
-                  <button type="button" class="btn btn-outline-primary" name="review"
-                    onclick="markForReview()">Review</button>
-                  <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" {% if
-                    index>=
-                    row_data|length - 1 %} disabled {% endif %}>Next</button>
+            <div
+              class="d-flex justify-content-center align-items-center"
+              style="width: 100%"
+            >
+              <div
+                class="btn-toolbar"
+                role="toolbar"
+                aria-label="Toolbar with button groups"
+              >
+                <div
+                  class="btn-group btn-group-lg m-5"
+                  role="group"
+                  aria-label="Basic outlined example"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    name="prev"
+                    onclick="prevQuestion()"
+                    {%
+                    if
+                    index
+                    <="0"
+                    %}
+                    disabled
+                    {%
+                    endif
+                    %}
+                  >
+                    Previous
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    name="review"
+                    onclick="markForReview()"
+                  >
+                    Review
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    name="next"
+                    onclick="nextQuestion()"
+                    {%
+                    if
+                    index
+                  >
+                    = row_data|length - 1 %} disabled {% endif %}>Next
+                  </button>
                 </div>
-                <div class="btn-group btn-group-lg mt-5 mb-5" role="group" aria-label="Second group">
-                  <button type="button" class="btn btn-success" name="submitQuizButton"
-                    onclick="submitQuiz()">Submit</button>
+                <div
+                  class="btn-group btn-group-lg mt-5 mb-5"
+                  role="group"
+                  aria-label="Second group"
+                >
+                  <button
+                    type="button"
+                    class="btn btn-success"
+                    name="submitQuizButton"
+                    onclick="submitQuiz()"
+                  >
+                    Submit
+                  </button>
                 </div>
               </div>
             </div>
-
-
           </div>
 
           {% else %}
           <p>No questions available.</p>
           {% endif %}
-
         </form>
       </div>
-
     </div>
-
   </div>
 </div>
 
-
 <script>
   // Pass the row_data variable to JavaScript
-  // convert the string into the javascript object 
+  // convert the string into the javascript object
   var row_data = JSON.parse(document.getElementById("row_data").innerText);
 
   // console.log(row_data);
@@ -235,7 +328,7 @@
   // Function to update the selected answer for a question
   function updateSelectedAnswer(questionIndex, selectedAnswer) {
     userAnswers[questionIndex] = selectedAnswer;
-    console.log(" userAnswers" + userAnswers) //This line logs the updated userAnswers array to the browser's console for debugging purposes.
+    console.log(" userAnswers" + userAnswers); //This line logs the updated userAnswers array to the browser's console for debugging purposes.
   }
 
   // Function to calculate and update the total score
@@ -245,11 +338,12 @@
     for (var i = 0; i < row_data.length; i++) {
       var correctAnswer = row_data[i][5]; // Correct answer for the current question
       var userAnswer = userAnswers[i]; // User's selected answer for the current question
-      if (userAnswer === correctAnswer) { // Check if user answered correctly
+      if (userAnswer === correctAnswer) {
+        // Check if user answered correctly
         totalScore++;
       }
     }
-    document.getElementById('total_score').value = totalScore; // Update the total score input field
+    document.getElementById("total_score").value = totalScore; // Update the total score input field
   }
 
   // Set the initial value of the timer in seconds
@@ -270,25 +364,22 @@
         seconds.toString().padStart(2, "0");
 
       // Update progress bar
-      const progressBar = document.getElementById('progress-bar');
-      const progressValue = document.getElementById('progress-value');
+      const progressBar = document.getElementById("progress-bar");
+      const progressValue = document.getElementById("progress-value");
 
-      let width = parseFloat(progressBar.getAttribute('aria-valuenow'));
+      let width = parseFloat(progressBar.getAttribute("aria-valuenow"));
       const widthDecrementPerSecond = 100 / timerDurationInSeconds;
       width -= widthDecrementPerSecond;
 
-      progressBar.setAttribute('aria-valuenow', width);
-      progressBar.style.width = width + '%';
+      progressBar.setAttribute("aria-valuenow", width);
+      progressBar.style.width = width + "%";
       // progressValue.textContent = Math.round(width) + '%';
 
       // Change progress bar color to red when last 25% is remaining
       if (width <= 25) {
-        
-        progressBar.classList.add('bg-danger'); // Add red color class
-      }
-      else if(width <=50){
-        progressBar.classList.remove('bg-success'); 
-        
+        progressBar.classList.add("bg-danger"); // Add red color class
+      } else if (width <= 50) {
+        progressBar.classList.remove("bg-success");
       }
 
       timerDuration--; // Decrease timer duration by 1 second
@@ -304,36 +395,33 @@
   // Call the updateTimerAndProgressBar function every second
   const timerInterval = setInterval(updateTimerAndProgressBar, 1000);
 
-
-
   function markAttempted() {
     let selectedButton = document.querySelector(`[name="select${index + 1}"]`);
-  
+
     //to change the visual appearance or behavior of the button on the webpage.
 
-    selectedButton.classList.add('attempted');
-
-
+    selectedButton.classList.add("attempted");
   }
 
   function markActive(markIndex) {
-    let selectedButton = document.querySelector(`[name="select${markIndex + 1}"]`);
-    selectedButton.classList.add('active');
+    let selectedButton = document.querySelector(
+      `[name="select${markIndex + 1}"]`
+    );
+    selectedButton.classList.add("active");
   }
 
-  function removeActive(Index){
+  function removeActive(Index) {
     let selectedButton = document.querySelector(`[name="select${Index + 1}"]`);
-    selectedButton.classList.remove('active');
+    selectedButton.classList.remove("active");
   }
 
   function markForReview() {
     let selectedButton = document.querySelector(`[name="select${index + 1}"]`);
-    selectedButton.classList.toggle('review');
+    selectedButton.classList.toggle("review");
   }
 
   // Function to move to the next question
   function nextQuestion() {
-    
     if (index < row_data.length - 1) {
       removeActive(index);
       index++; // Increase the question index
@@ -345,7 +433,6 @@
 
   // Function to move to the previous question
   function prevQuestion() {
-   
     if (index > 0) {
       removeActive(index);
       index--; // Decrease the question index
@@ -367,7 +454,7 @@
 
   // Function to display the current question
   function displayQuestion() {
-    const questionContainer = document.getElementById('question-container');
+    const questionContainer = document.getElementById("question-container");
 
     questionContainer.innerHTML = `
         <div>
@@ -377,30 +464,40 @@
         <h3 class="font-weight-bold mb-4">${row_data[index][0]}</h3>
         </div>
 
-        <input type="hidden" name="correct_answer" value="${row_data[index][5]}" />
+        <input type="hidden" name="correct_answer" value="${
+          row_data[index][5]
+        }" />
 
         <div class="container">
               <div class="row mt-4 mb-2">
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option1" name="answer" value="${row_data[index][1] }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option1" name="answer" value="${
+                      row_data[index][1]
+                    }" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option2" name="answer" value="${ row_data[index][2] }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option2" name="answer" value="${
+                      row_data[index][2]
+                    }" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
               <div class="row mt-3 mb-2">
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option3" name="answer" value="${ row_data[index][3] }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option3" name="answer" value="${
+                      row_data[index][3]
+                    }" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer" value="${row_data[index][4] }" onclick="toggleButton(this)" />
+                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer" value="${
+                      row_data[index][4]
+                    }" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
@@ -411,41 +508,45 @@
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
         <div class="btn-group btn-group-lg m-5" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" ${index <= 0 ? 'disabled' : ''} >Previous</button>
+        <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" ${
+          index <= 0 ? "disabled" : ""
+        } >Previous</button>
         <button type="button" class="btn btn-outline-primary" name="review" onclick="markForReview()">Review</button>
-        <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" ${index >= row_data.length - 1 ? 'disabled' : ''}>Next</button>
+        <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" ${
+          index >= row_data.length - 1 ? "disabled" : ""
+        }>Next</button>
     </div>
     <div class="btn-group btn-group-lg mt-5 mb-5" role="group" aria-label="Second group">
         <button type="button" class="btn btn-success" name="submitQuizButton" onclick="submitQuiz()">Submit</button>
     </div></div>
               </div>
     `;
-
   }
 
   function toggleButton(button) {
     // Deactivate all buttons
-    document.querySelectorAll('input[name="answer"]').forEach(function(btn) {
-      btn.classList.remove('button-effect');
+    document.querySelectorAll('input[name="answer"]').forEach(function (btn) {
+      btn.classList.remove("button-effect");
     });
 
     // Activate the clicked button
-    button.classList.toggle('button-effect');
+    button.classList.toggle("button-effect");
     updateSelectedAnswer(index, button.value);
-    
-    markAttempted();
 
+    markAttempted();
   }
 
   // Function to submit the quiz
   function submitQuiz() {
-   
-    document.getElementById("time_taken").value = (timerDuration2 - timerDuration).toString();
+    document.getElementById("time_taken").value = (
+      timerDuration2 -
+      timerDuration -
+      1
+    ).toString();
     // time_taken = document.getElementById("time_taken").value;
     //final logic to submit quiz
     calculateTotalScore();
     document.getElementById("quiz-form").submit();
   }
-
 </script>
 {% endblock %}

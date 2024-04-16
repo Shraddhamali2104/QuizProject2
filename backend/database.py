@@ -378,6 +378,7 @@ def signup_user(form_data, image_path):
             cursor.close()
             conn.close()
 
+
 def verify_username_email(username, email):
     try:
         conn = connect_to_db()
@@ -388,7 +389,7 @@ def verify_username_email(username, email):
 
         row = cursor.fetchone()
 
-        if(row[0] == email):
+        if row[0] == email:
             return True
         else:
             return False
@@ -404,12 +405,13 @@ def verify_username_email(username, email):
             cursor.close()
             conn.close()
 
-def update_password(form_data):
-    username = form_data['username']
-    password1 = form_data['password1']
-    password2 = form_data['password2']
 
-    if (password1 != password2):
+def update_password(form_data):
+    username = form_data["username"]
+    password1 = form_data["password1"]
+    password2 = form_data["password2"]
+
+    if password1 != password2:
         return False
 
     try:
@@ -762,7 +764,6 @@ def update_profile_database(username, form_data):
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
-  
 
         query = """
             UPDATE accounts
@@ -1051,11 +1052,49 @@ def add_result_to_user_data_DB(form_data, username):
         query2 = "INSERT INTO user_data (user_id, test_id, score, time_required, date_stamp, time_stamp) VALUES (%s, %s, %s,%s, %s, %s)"
 
         cursor.execute(
-            query2, (user_id, test_id, score, time_required, current_date, formatted_time)
+            query2,
+            (user_id, test_id, score, time_required, current_date, formatted_time),
         )
         conn.commit()
 
         return True
+
+    except Exception as e:
+        print(f"Error Occurred: {e}")
+        return False
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+
+
+# adding reports
+
+
+def get_testid_score_report(username):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+
+    try:
+        query = "SELECT user_id FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+        user_id = cursor.fetchone()[0]
+        # print("userid : line 954 db :  ")
+        # print(user_id)
+
+        query2 = """SELECT (SELECT subject FROM test_details WHERE test_id = user_data.test_id) AS subject, score
+FROM
+    user_data
+WHERE
+    user_id = %s;
+"""
+
+        cursor.execute(query2, (user_id,))
+        rows = cursor.fetchall()
+        # print(rows)
+        conn.commit()
+
+        return rows
 
     except Exception as e:
         print(f"Error Occurred: {e}")

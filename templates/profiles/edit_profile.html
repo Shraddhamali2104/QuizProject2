@@ -7,7 +7,7 @@
 
 
 {% block header%}
-<div class="container text-center" >
+<div class="container text-center">
     <h2>Edit Your profile here<h2>
 </div>
 
@@ -17,48 +17,48 @@
 {% block middle_content %}
 <!-- Middle content -->
 
-<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+    id="modalSignin">
     <div class="modal-dialog" role="document">
         <div class="modal-content rounded-4 shadow">
             <div class="modal-header p-5 pb-4 border-bottom-0">
-     
-<div class="container">
-   
-    <form action="/update_profile" enctype="multipart/form-data" method="POST">
-       
 
-        <div class="col-sm-12 ">
+                <div class="container">
 
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" class="form-control" id="username" placeholder="" value="" required="" fdprocessedid="m5hn">
-             
-            <label for="first_name" class="form-label mt-3">First name:</label>
-            <input type="text" class="form-control" id="firstName" placeholder="" value="" required="" fdprocessedid="m5hn">
+                    <form action="/update_profile" method="POST">
 
-            <label for="last_name" class="form-label mt-3">Last name:</label>
-            <input type="text" class="form-control" id="last_name" placeholder="" value="" required="" fdprocessedid="m5hn">
-             
-            <label for="email" class="form-label mt-3">Email:</label>
-            <input type="text" class="form-control" id="email" placeholder="" value="" required="" fdprocessedid="m5hn">
-             
-           
-            <label for="phone_number" class="form-label mt-3">Phone Number</label>
-            <input type="text" class="form-control" id="phone_number" placeholder="" value="" required="" fdprocessedid="m5hn">
 
-            <label for="password" class="form-label mt-3">Password</label>
-            <input type="text" class="form-control" id="password" placeholder="" value="" required="" fdprocessedid="m5hn">
-             
-             
-             
-          </div>
-          <br>
-        <button type="submit" class="btn btn-success mt-3" >Save Changes</button>
-    </form>
+                        <div class="col-sm-12 ">
 
-    
-</div>
-    </div>
-</div>
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" class="form-control" name="username" id="username" value="{{data[2]}}" disabled>
+
+                            <label for="first_name" class="form-label mt-3">First name:</label>
+                            <input type="text" class="form-control" name="first_name" id="first_name" value="{{data[3]}}">
+
+                            <label for="last_name" class="form-label mt-3">Last name:</label>
+                            <input type="text" class="form-control" name="last_name" id="last_name" value="{{data[4]}}">
+
+                            <label for="email" class="form-label mt-3">Email:</label>
+                            <input type="text" class="form-control" name="email" id="email" value="{{data[5]}}">
+
+                            <label for="phone_number" class="form-label mt-3">Phone Number</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number" value="{{data[6]}}">
+
+                            <!-- <label for="password" class="form-label mt-3">Password</label>
+            <input type="text" class="form-control" id="password"  value="" > -->
+
+
+
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success mt-3">Save Changes</button>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

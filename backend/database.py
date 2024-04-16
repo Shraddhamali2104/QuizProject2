@@ -730,6 +730,7 @@ def view_profile_data(username):
         cursor.execute(query, (username,))
 
         row = cursor.fetchone()
+        # print(row)
 
         if row:
             return row  # Return the user profile data if found
@@ -752,40 +753,23 @@ def update_profile_database(username, form_data):
     # ... (implement validation logic here)
 
     # Extract data from the form
-    new_data = {
-        key: value
-        for key, value in form_data.items()
-        if key in ("first_name", "last_name", "phone_number", "email")
-    }
 
-    # Generate a random salt for password hashing (if updating password)
-    if "password" in form_data:
-        salt = generate_random_salt()
-        hashed_password = hash_password(form_data["password"], salt)
-        new_data["password_salt"] = salt
-        new_data["password_hash"] = hashed_password
-    else:
-        # Maintain existing password hash (assuming separate logic for password change)
-        pass
+    last_name = form_data["last_name"]
+    first_name = form_data["first_name"]
+    email = form_data["email"]
+    phone_number = form_data["phone_number"]
 
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
+  
 
-        # Use parameterized queries to prevent SQL injection
-        update_clauses = []
-        for key, value in new_data.items():
-            update_clauses.append(f"{key} = %s")
-
-        # Combine update clauses with comma separators
-        update_string = ", ".join(update_clauses)
-
-        query = f"""
+        query = """
             UPDATE accounts
-            SET {update_string}
+            SET first_name = %s, last_name = %s, email = %s, phone_number = %s
             WHERE username = %s;
         """
-        parameters = tuple(new_data.values()) + (username,)
+        parameters = (first_name, last_name, email, phone_number, username)
 
         cursor.execute(query, parameters)
 

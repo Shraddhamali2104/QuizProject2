@@ -6,59 +6,63 @@
     .max-width {
         width: max-content;
     }
+
     .table1 th,
     .table1 td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells for better readability */
+        border: 1px solid #ddd;
+        /* Add border to table cells */
+        padding: 8px;
+        /* Add padding to table cells for better readability */
     }
+
     .table1 tbody tr:hover {
-        background-color: rgb(136, 224, 224); /* Change background color on hover */
+        background-color: rgb(136, 224, 224);
+        /* Change background color on hover */
     }
-    
 </style>
 {% endblock %}
 
 {% block header %}
-<div class="container text-center" >
-  <h2>Your previous test history <h2>
+<div class="container text-center">
+    <h2>Your previous test history <h2>
 </div>
 {%endblock%}
 
 {% block middle_content %}
-<div class="card mt-5">
+<div class="card mt-5 shadow">
     <div class="card-body">
-       
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Serial No</th>
-            <th scope="col">Subject</th>
-            <th scope="col">Test Number</th>
-            <th scope="col">User Score</th>
-            <th scope="col">Total Score</th>
-            <th scope="col">Time Taken by User</th>
-            <th scope="col">Test Duration</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in row_data %}
-        <tr>
-            <td  scope="row">{{ row[0] }}</td>
-            <td  scope="row">{{ row[1] }}</td>
-            <td  scope="row">{{ row[2] }}</td>
-            <td  scope="row">{{ row[3] }}</td>
-            <td  scope="row">{{ row[4] }}</td>
-            <td  scope="row">{{ row[5] }}</td>
-            <td  scope="row">{{ row[6] }}</td>
-            <td  scope="row">{{ row[7] }}</td>
-            <td  scope="row">{{ row[8] }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-        
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Serial No</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Test Number</th>
+                    <th scope="col">User Score</th>
+                    <th scope="col">Total Score</th>
+                    <th scope="col">Time Taken by User</th>
+                    <th scope="col">Test Duration</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in row_data %}
+                <tr>
+                    <td scope="row">{{ row[0] }}</td>
+                    <td scope="row">{{ row[1] }}</td>
+                    <td scope="row">{{ row[2] }}</td>
+                    <td scope="row">{{ row[3] }}</td>
+                    <td scope="row">{{ row[4] }}</td>
+                    <td scope="row">{{ row[5] }}</td>
+                    <td scope="row">{{ row[6] }}</td>
+                    <td scope="row">{{ row[7] }}</td>
+                    <td scope="row">{{ row[8] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
     </div>
 </div>
 

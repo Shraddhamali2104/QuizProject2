@@ -1,46 +1,88 @@
 {% extends 'base.html' %}
 
 {% block title %}Quiz{% endblock %}
+{% block style_content %}
+<style>
+    .button1 {
+        display: inline-block;
+        /* Display the div as inline block */
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid black;
+        color: black;
+        /* margin: 20px; */
+        /* Adjust spacing between buttons */
+    }
+
+    .yellowgreen {
+        background-color: yellowgreen;
+    }
+
+    .firebrick {
+        background-color: firebrick;
+    }
+
+
+    .darkslateblue {
+        background-color: darkslateblue;
+
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .inline-container {
+        display: inline;
+    }
+    .card-title{
+        font-size: 4rem;
+    }
+    
+    .card-body,
+    .card-body * {
+        font-size: 2rem; /* Adjust the font size as needed */
+    }
+
+</style>
+{% endblock %}
+
+
 {% block header%}
-<div class="container text-center" >
-    <h2>📌 Instructions 📌</h2>
-</div>
 
 {% endblock%}
 
 {% block middle_content %}
 
-<div class="card mt-5">
-    <div class="card-body">
-        <p>1.Ensure you are in a quiet and distraction-free environment.</p>
-        <p>2.Make sure you have a stable internet connection.</p>
-        <p>3.Keep an eye on the timer displayed on the screen during the test and pace yourself accordingly.</p>
-        <p>4.Read each question carefully and answer to the best of your ability.</p>
-        <p>5.This test is designed to assess your knowledge and skills honestly.
-            Do not use any unauthorized aids, resources, or assistance during the test.</p>
-        <p>6.When you choose to review a question, 
-            it will be displayed in "darkslateblue" to indicate that it requires further attention or consideration.</p>
-        <p>When you're actively working on a question, it will be highlighted in a vibrant "green" color to indicate your ongoing effort.</p>   
-        <p>8.Questions that have not been answered will be highlighted in "red", signaling that they need to be addressed.</p>
-        <p>9.Questions that have been answered will be displayed in "yellowgreen" to show that they have been attempted.</p>
-        <p>The timer bar located at the top of the page serves as a visual guide for your quiz progress. Initially, it will be displayed in "green". As you approach the halfway mark of the allotted time, the color transitions to a calming "blue". When you have just 25% of the time remaining, the timer bar will turn "red", signaling the urgency to complete the quiz.</p>
-        
-        
-        
-        
-        
-        <form action="/start_test" method="POST">
-            <input type="hidden" name="test_id" value="{{test_id}}">
-            
-            <div class="container text-center" >
-            <button type="submit" class="btn btn-success">Start Quiz</button>
-            </div>
-        
-        </form>
+
+<div class="container mt-5 mb-5">
+    <div class="card mb-5 shadow">
+        <div class="card-header bg-primary text-white">
+            <h5 class="card-title text-center">📌 Instructions 📌</h5>
+        </div>
+        <div class="card-body">
+            <ul>
+                <li>Ensure you are in a quiet and distraction-free environment.</li>
+                <li>Make sure you have a stable internet connection.</li>
+                <li>Keep an eye on the timer displayed on the screen during the test and pace yourself accordingly.</li>
+                <li>Read each question carefully and answer to the best of your ability.</li>
+                <li>This test is designed to assess your knowledge and skills honestly. Do not use any unauthorized aids, resources, or assistance during the test.</li>
+                <li>When you choose to review a question, it will be displayed in <span class="button1 darkslateblue"></span> color to indicate that it requires further attention or consideration.</li>
+                <li>When you're actively working on a question, it will be highlighted in a <span class="button1 green"></span> color to indicate your ongoing effort.</li>
+                <li>Questions that have not been answered will be highlighted in <span class="button1 firebrick"></span>, signaling that they need to be addressed.</li>
+                <li>Questions that have been answered will be displayed in <span class="button1 yellowgreen"></span> to show that they have been attempted.</li>
+                <li>The timer bar located at the top of the page serves as a visual guide for your quiz progress. Initially, it will be displayed in <span class="button1 bg-success"></span>. As you approach the halfway mark of the allotted time, the color transitions to a calming <span class="button1 bg-primary"></span>. When you have just 25% of the time remaining, the timer bar will turn <span class="button1 bg-danger"></span>, signaling the urgency to complete the quiz.</li>
+            </ul>
+
+            <form action="/start_test" method="POST">
+                <input type="hidden" name="test_id" value="{{test_id}}">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Start Quiz</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
-
-
+</div>
 
 
 {% endblock %}

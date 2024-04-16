@@ -9,13 +9,13 @@
 </style> -->
 {% endblock %}
 {% block header%}
-<div class="container text-center" >
+<div class="container text-center">
     <h2> Your Total Score </h2>
     {% if total_score > 5 %}
-<h2> <em> Congratulations!🎉 </em> </p>
-{% else %}
-<h2> Work Hard Next Time !</h2>
-{% endif %}
+    <h2> <em> Congratulations!🎉 </em> </p>
+        {% else %}
+        <h2> Work Hard Next Time !</h2>
+        {% endif %}
 </div>
 
 
@@ -27,41 +27,43 @@
 <!-- Middle content will be replaced with quiz questions -->
 <div class="card mt-5">
     <div class="card-body">
-<div class="container">
+        <div class="container">
 
-<div class="container text-center">
-<h1>Total score = {{ total_score }} </h1>
-</div>
+            <div class="container text-center">
+                <h1>Total score = {{ total_score }} </h1>
+            </div>
 
 
-    <div class="container table1 max-width">
-        <table>
-            <thead>
-                <tr>
-                    <th>Serial No.</th>
-                    <th>Score</th>
-                    <th>Test Duration (seconds)</th>
-                    <th> On Date </th>
-                    <th> On Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in data %}
-                <tr>
-                    <td>{{row[0]}}</td>
-                    <td>{{row[1]}}</td>
-                    <td>{{row[2]}}</td>
-                    <td>{{row[3]}}</td>
-                    <td>{{row[4]}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Serial No.</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Test Duration (seconds)</th>
+                        <th scope="col"> On Date </th>
+                        <th scope="col"> On Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td scope="row">{{row[0]}}</td>
+                        <td scope="row">{{row[1]}}</td>
+                        <td scope="row">{{row[2]}}</td>
+                        <td scope="row">{{row[3]}}</td>
+                        <td scope="row">{{row[4]}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
+
+
+        </div>
+        <div>
+            <a href="/" class="btn btn-primary"> Home</a>
+        </div>
     </div>
 </div>
-</div>
-</div>
-</div>
 
-{% endblock %}
+    {% endblock %}

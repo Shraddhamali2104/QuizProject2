@@ -15,7 +15,7 @@
   }
   
   header {
-    width: 100%;
+    width: 100%;}
   
   .fixed-header {
     position: fixed;
@@ -33,3 +33,7 @@
     justify-content: space-between;
   }
  
+
+
+
+

@@ -9,40 +9,41 @@
 
 {% block middle_content %}
 <!-- Middle content -->
-<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+  id="modalSignin">
   <div class="modal-dialog" role="document">
-      <div class="modal-content rounded-4 shadow">
-          <div class="modal-header p-5 pb-4 border-bottom-0">
-<div class="container">
-  <form action="/update_subject" method="POST">
-    <div class="col-sm-6">
-    <div>
-        <label for="subject">Enter Subject Name:</label>
-        <input type="text" class="form-control" name="subject" id="subject">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header p-5 pb-4 border-bottom-0">
+        <div class="container">
+          <form action="/update_subject" method="POST">
+            <div >
+              <div class=" m-3">
+                <label for="subject">Enter Subject Name:</label>
+                <input type="text" class="form-control" name="subject" id="subject">
 
-    </div>
-    <div>
-        <label for="test_no">Enter Test No:</label>
-        <input type="text" class="form-control" name="test_no" id="test_no">
+              </div>
+              <div class=" m-3">
+                <label for="test_no">Enter Test No:</label>
+                <input type="text" class="form-control" name="test_no" id="test_no">
 
+              </div>
+              <div class=" m-3">
+                <label for="total_marks">Enter Total Marks</label>
+                <input type="text" class="form-control" name="total_marks" id="total_marks">
+              </div>
+              <div class=" m-3">
+                <label for="test_duration">Enter Test Duration</label>
+                <input type="text" class="form-control" name="test_duration" id="test_duration">
+              </div>
+              <br>
+
+
+              <button type="submit" class="btn btn-primary m-3"> Update</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div>
-        <label for="total_marks">Enter Total Marks</label>
-        <input type="text" class="form-control" name="total_marks" id="total_marks">
-    </div>
-    <div>
-        <label for="test_duration">Enter Test Duration</label>
-        <input type="text" class="form-control" name="test_duration" id="test_duration">
-    </div>
-    <br>
-     
-  
-    <button type="submit" class="btn btn-primary"> Update</button>
-  </form>
-</div>
-</div>
-</div>
-</div>
+  </div>
 </div>
 </div>
 

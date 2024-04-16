@@ -4,17 +4,10 @@
 
 {% block style_content %}
 <style>
-    .max-width {
-        width: max-content;
+     td {
+        vertical-align: middle;
     }
-    .table1 th,
-    .table1 td {
-        border: 1px solid #ddd; /* Add border to table cells */
-        padding: 8px; /* Add padding to table cells for better readability */
-    }
-    .table1 tbody tr:hover {
-        background-color: rgb(136, 224, 224); /* Change background color on hover */
-    }
+  
     
 </style>
 {% endblock %}
@@ -28,22 +21,20 @@
 
 {% block middle_content %}
     <!-- User List content -->
-    <div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog" id="modalSignin">
-        <div class="modal-content rounded-4 shadow">
-            <div class="modal-header p-5 pb-4 border-bottom-0">
-                <div class="container table1 max-width">
-       
-        <table >
+    
+    <div class="card mt-5">
+        <div class="card-body">   
+        <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Serial No</th>
-                    <th>User Id</th>
-                    <th>Username</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Profile Pic</th>
+                    <th scope="col">Serial No</th>
+                    <th scope="col">User Id</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Profile Pic</th>
                     <!-- <th>Date Joined</th>
                     <th>User Type</th> -->
                 </tr>
@@ -52,15 +43,15 @@
             <tbody>
                 {% for row in user_data %}
                     <tr >
-                        <td>{{ loop.index  }}</td>
-                        <td>{{ row[0] }}</td>
+                        <td  scope="row">{{ loop.index  }}</td>
+                        <td  scope="row">{{ row[0] }}</td>
                         <!-- <td>{{ row[1] }}</td> -->
-                        <td>{{ row[2] }}</td>
-                        <td>{{ row[3] }}</td>
-                        <td>{{ row[4] }}</td>
-                        <td>{{ row[5] }}</td>
-                        <td>{{ row[6] }}</td>
-                       <td>
+                        <td  scope="row">{{ row[2] }}</td>
+                        <td  scope="row">{{ row[3] }}</td>
+                        <td  scope="row">{{ row[4] }}</td>
+                        <td  scope="row">{{ row[5] }}</td>
+                        <td  scope="row">{{ row[6] }}</td>
+                       <td   scope="row">
 
                            <img src="{{ url_for('static', filename=  row[7]) }}" alt="Profile Image" class=" rounded-circle" style="width: 5rem; height: 5rem;">
                     
@@ -78,6 +69,5 @@
     </div>
             </div>
         </div>
-    </div>
-</div>
+
 {% endblock %}

@@ -378,6 +378,71 @@ def signup_user(form_data, image_path):
             cursor.close()
             conn.close()
 
+def verify_username_email(username, email):
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "SELECT email FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+
+        row = cursor.fetchone()
+
+        if(row[0] == email):
+            return True
+        else:
+            return False
+
+    except (psycopg2.Error, Exception) as e:
+        # Handle potential database errors and generic exceptions
+        print("Error occurred:", e)
+        return False
+
+    finally:
+        # Ensure proper connection closure even on exceptions
+        if conn:
+            cursor.close()
+            conn.close()
+
+def update_password(form_data):
+    username = form_data['username']
+    password1 = form_data['password1']
+    password2 = form_data['password2']
+
+    if (password1 != password2):
+        return False
+
+    try:
+        conn = connect_to_db()
+        cursor = conn.cursor()
+
+        query = "SELECT password_salt FROM accounts WHERE username = %s"
+        cursor.execute(query, (username,))
+        row = cursor.fetchone()
+
+        stored_salt = row[0]  # Assuming stored salt is the first element in the row
+
+        hashed_password = hash_password(password1, stored_salt)
+
+        query2 = "UPDATE accounts SET password_hash = %s WHERE username = %s;"
+        cursor.execute(query2, (hashed_password, username))
+
+        print("passwrod updated")
+        conn.commit()
+
+        return True
+
+    except (psycopg2.Error, Exception) as e:
+        # Handle potential database errors and generic exceptions
+        print("Error occurred:", e)
+        return False
+
+    finally:
+        # Ensure proper connection closure even on exceptions
+        if conn:
+            cursor.close()
+            conn.close()
+
 
 def show_users_data(user, username, test_id=0):
     try:
@@ -665,6 +730,7 @@ def view_profile_data(username):
         cursor.execute(query, (username,))
 
         row = cursor.fetchone()
+        # print(row)
 
         if row:
             return row  # Return the user profile data if found
@@ -687,40 +753,23 @@ def update_profile_database(username, form_data):
     # ... (implement validation logic here)
 
     # Extract data from the form
-    new_data = {
-        key: value
-        for key, value in form_data.items()
-        if key in ("first_name", "last_name", "phone_number", "email")
-    }
 
-    # Generate a random salt for password hashing (if updating password)
-    if "password" in form_data:
-        salt = generate_random_salt()
-        hashed_password = hash_password(form_data["password"], salt)
-        new_data["password_salt"] = salt
-        new_data["password_hash"] = hashed_password
-    else:
-        # Maintain existing password hash (assuming separate logic for password change)
-        pass
+    last_name = form_data["last_name"]
+    first_name = form_data["first_name"]
+    email = form_data["email"]
+    phone_number = form_data["phone_number"]
 
     try:
         conn = connect_to_db()
         cursor = conn.cursor()
+  
 
-        # Use parameterized queries to prevent SQL injection
-        update_clauses = []
-        for key, value in new_data.items():
-            update_clauses.append(f"{key} = %s")
-
-        # Combine update clauses with comma separators
-        update_string = ", ".join(update_clauses)
-
-        query = f"""
+        query = """
             UPDATE accounts
-            SET {update_string}
+            SET first_name = %s, last_name = %s, email = %s, phone_number = %s
             WHERE username = %s;
         """
-        parameters = tuple(new_data.values()) + (username,)
+        parameters = (first_name, last_name, email, phone_number, username)
 
         cursor.execute(query, parameters)
 
@@ -987,6 +1036,11 @@ def add_result_to_user_data_DB(form_data, username):
     current_date = current_date_time.date()
     current_time = current_date_time.time()
 
+    # Format current_time to display hours, minutes, and seconds only
+    formatted_time = current_time.strftime("%H:%M:%S")
+    print("time")
+    print(formatted_time)
+
     try:
         query = "SELECT user_id FROM accounts WHERE username = %s"
         cursor.execute(query, (username,))
@@ -997,7 +1051,7 @@ def add_result_to_user_data_DB(form_data, username):
         query2 = "INSERT INTO user_data (user_id, test_id, score, time_required, date_stamp, time_stamp) VALUES (%s, %s, %s,%s, %s, %s)"
 
         cursor.execute(
-            query2, (user_id, test_id, score, time_required, current_date, current_time)
+            query2, (user_id, test_id, score, time_required, current_date, formatted_time)
         )
         conn.commit()
 

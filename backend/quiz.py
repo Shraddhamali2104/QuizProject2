@@ -57,13 +57,12 @@ def submit():
             total_score = int(request.form['total_score'])
             test_id = int(request.form['test_id'])
 
-            add_result_to_user_data_DB(request.form, username)
-            data = show_users_data(session['user'], username, test_id)
-            if data:
-                session['quiz_submitted'] = True  # Set session variable indicating quiz submission
-                return render_template("test_section/result.html", total_score=total_score, data=data), session
+            boolean = add_result_to_user_data_DB(request.form, username)
+            if boolean:
+                data = show_users_data(session['user'], username, test_id)
+                return render_template("test_section/result.html", total_score=total_score, data=data)
             else:
-                return "Unable to submit result"
+                return render_template("test_section/resubmitquiz.html")
         else:
             pass
     else:

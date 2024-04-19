@@ -5,7 +5,7 @@
 
 {% endblock %}
 {% block header%}
-<div class="text-center">
+<div class=" container text-center">
     <h3>Forgot Password<h3>
 </div>
 {%endblock%}
@@ -25,19 +25,58 @@
                         <input type="hidden" name="username" value="{{ username }}">
                         <div class="mb-3">
                             <label for="password1" class="form-label">Enter Password</label>
-                            <input type="password" class="form-control" id="password1" name="password1">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password1" name="password1">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword1">
+                                    <i class="bi bi-eye-slash" id="toggleIcon1"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="password2" class="form-label">Re-Enter Password</label>
-                            <input type="password" class="form-control" id="password2" name="password2">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password2" name="password2">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword2">
+                                    <i class="bi bi-eye-slash" id="toggleIcon2"></i>
+                                </button>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Reset Password</button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#togglePassword1').click(function () {
+            const passwordField = $('#password1');
+            const passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType === 'password') {
+                passwordField.attr('type', 'text');
+                $('#toggleIcon1').removeClass('bi-eye-slash').addClass('bi-eye');
+            } else {
+                passwordField.attr('type', 'password');
+                $('#toggleIcon1').removeClass('bi-eye').addClass('bi-eye-slash');
+            }
+        });
+
+        $('#togglePassword2').click(function () {
+            const passwordField = $('#password2');
+            const passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType === 'password') {
+                passwordField.attr('type', 'text');
+                $('#toggleIcon2').removeClass('bi-eye-slash').addClass('bi-eye');
+            } else {
+                passwordField.attr('type', 'password');
+                $('#toggleIcon2').removeClass('bi-eye').addClass('bi-eye-slash');
+            }
+        });
+    });
+</script>
 
 {% endblock %}

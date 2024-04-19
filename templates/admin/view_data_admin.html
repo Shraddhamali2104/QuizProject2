@@ -55,7 +55,7 @@
             <tbody>
                 {% for row in row_data %}
                 <tr>
-                    <td  scope="row">{{ row[0] }}</td>
+                    <td scope="row">{{ row[0] }}</td>
                     <td scope="row">{{ row[1] }}</td>
                     <td scope="row">{{ row[2] }}</td>
                     <td scope="row">{{ row[3] }}</td>
@@ -71,6 +71,25 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card m-3 shadow">
+                <div class="card-body">
+                    <img src="data:image/png;base64,{{ plot_data }}" alt="Plot" class="img-fluid">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card m-3 shadow">
+                <div class="card-body">
+                    <!-- <img src="data:image/png;base64,{{ plot_data2 }}" alt="Plot" class="img-fluid"> -->
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

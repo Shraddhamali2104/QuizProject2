@@ -4,11 +4,13 @@ from backend.database import (
     get_all_tests_DB,
     get_test_data,
     get_test_basic_details,
-    add_result_to_user_data_DB, 
+    add_result_to_user_data_DB,
     show_users_data,
 )
+from backend.plots import plot_data_result, plot_data_result2
 
 quiz_bp = Blueprint("quiz", __name__)
+
 
 @quiz_bp.route("/quiz", methods=["GET", "POST"])
 def index():
@@ -28,7 +30,7 @@ def index():
             else:
                 return "No test found"
     else:
-        return redirect(url_for('login.index'))
+        return redirect(url_for("login.index"))
 
 
 @quiz_bp.route("/start_test", methods=["GET", "POST"])
@@ -38,7 +40,7 @@ def start_test():
         if request.method == "GET":
             test_id = request.args.get("test_id")
             # print(test_id)
-            return render_template("test_section/instructions.html", test_id = test_id)
+            return render_template("test_section/instructions.html", test_id=test_id)
         else:
             test_id = request.form["test_id"]
             data = get_test_data(test_id)
@@ -47,24 +49,30 @@ def start_test():
                 "test_section/quiz.html", row_data=data, index=0, basic_data=basic_data
             )
     else:
-        return redirect(url_for('login.index'))
+        return redirect(url_for("login.index"))
 
-@quiz_bp.route("/submit", methods=['GET', 'POST'])
+
+@quiz_bp.route("/submit", methods=["GET", "POST"])
 def submit():
-    if 'username' in session:
-        if request.method == 'POST':
-            username = session['username']
-            total_score = int(request.form['total_score'])
-            test_id = int(request.form['test_id'])
+    if "username" in session:
+        if request.method == "POST":
+            username = session["username"]
+            total_score = int(request.form["total_score"])
+            test_id = int(request.form["test_id"])
 
             boolean = add_result_to_user_data_DB(request.form, username)
             if boolean:
-                data = show_users_data(session['user'], username, test_id)
-                return render_template("test_section/result.html", total_score=total_score, data=data)
+                data = show_users_data(session["user"], username, test_id)
+                return render_template(
+                    "test_section/result.html",
+                    total_score=total_score,
+                    data=data,
+                    plot_data=plot_data_result(data),
+                    plot_data2=plot_data_result2(data),
+                )
             else:
                 return render_template("test_section/resubmitquiz.html")
         else:
             pass
     else:
-        return redirect(url_for('login.index'))
-    
+        return redirect(url_for("login.index"))

@@ -78,10 +78,7 @@ style_content %}
 
 <div class="container text-center mt-5">
   <div class="row" style="height: 40rem">
-    <div
-      class="col-md-4 card shadow d-flex justify-content-center align-items-center"
-      style="height: 100%"
-    >
+    <div class="col-md-4 card shadow d-flex justify-content-center align-items-center" style="height: 100%">
       <!-- Hidden input field to pass the updated timer value -->
 
       <input type="hidden" id="index" value="{{ index }}" />
@@ -97,11 +94,7 @@ style_content %}
         <!-- Start a new button group for every 3rd button -->
         <div class="button-group">
           {% endif %}
-          <button
-            type="button"
-            name="select{{ question_number }}"
-            onclick="goToSelectedQuestion({{ question_number}})"
-          >
+          <button type="button" name="select{{ question_number }}" onclick="goToSelectedQuestion({{ question_number}})">
             {{ question_number }}
           </button>
 
@@ -112,40 +105,22 @@ style_content %}
       </div>
     </div>
 
-    <div
-      class="col-md-8 card shadow d-flex flex-column justify-content-evenly align-items-center"
-      style="height: 100%"
-    >
+    <div class="col-md-8 card shadow d-flex flex-column justify-content-evenly align-items-center" style="height: 100%">
       <!-- Generate quiz -->
 
       <!-- progress bar -->
 
-      <div
-        class="progress w-100"
-        role="progressbar"
-        aria-label="Basic example"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        style="height: 2rem"
-      >
-        <div
-          class="progress-bar bg-success h-100 progress-bar-striped progress-bar-animated"
-          id="progress-bar"
-          aria-valuenow="100"
-          style="width: 100%"
-        ></div>
+      <div class="progress w-100" role="progressbar" aria-label="Basic example" aria-valuemin="0" aria-valuemax="100"
+        style="height: 2rem">
+        <div class="progress-bar bg-success h-100 progress-bar-striped progress-bar-animated" id="progress-bar"
+          aria-valuenow="100" style="width: 100%"></div>
       </div>
 
       <div>
         <form id="quiz-form" action="/submit" method="POST">
           <!-- Other form elements -->
 
-          <input
-            type="hidden"
-            name="time_taken"
-            id="time_taken"
-            value="{{ basic_data[1] }}"
-          />
+          <input type="hidden" name="time_taken" id="time_taken" value="{{ basic_data[1] }}" />
           <input type="hidden" id="total_score" name="total_score" value="0" />
           <input type="hidden" name="test_id" value="{{basic_data[0]}}" />
 
@@ -161,137 +136,55 @@ style_content %}
             <!-- Display the question -->
 
             <!-- Hidden input field to store the correct answer -->
-            <input
-              type="hidden"
-              name="correct_answer"
-              value="{{ row_data[index][5] }}"
-            />
+            <input type="hidden" name="correct_answer" value="{{ row_data[index][5] }}" />
 
             <div class="container">
               <div class="row mt-4 mb-2">
                 <div class="col-6">
-                  <div
-                    class="d-flex justify-content-center align-items-center h-100"
-                  >
-                    <input
-                      type="button"
-                      class="button-52 btn-block w-100"
-                      id="option1"
-                      name="answer"
-                      value="{{ row_data[index][1] }}"
-                      onclick="toggleButton(this)"
-                    />
+                  <div class="d-flex justify-content-center align-items-center h-100">
+                    <input type="button" class="button-52 btn-block w-100" id="option1" name="answer"
+                      value="{{ row_data[index][1] }}" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
-                  <div
-                    class="d-flex justify-content-center align-items-center h-100"
-                  >
-                    <input
-                      type="button"
-                      class="button-52 btn-block w-100"
-                      id="option2"
-                      name="answer"
-                      value="{{ row_data[index][2] }}"
-                      onclick="toggleButton(this)"
-                    />
+                  <div class="d-flex justify-content-center align-items-center h-100">
+                    <input type="button" class="button-52 btn-block w-100" id="option2" name="answer"
+                      value="{{ row_data[index][2] }}" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
               <div class="row mt-3 mb-2">
                 <div class="col-6">
-                  <div
-                    class="d-flex justify-content-center align-items-center h-100"
-                  >
-                    <input
-                      type="button"
-                      class="button-52 btn-block w-100"
-                      id="option3"
-                      name="answer"
-                      value="{{ row_data[index][3] }}"
-                      onclick="toggleButton(this)"
-                    />
+                  <div class="d-flex justify-content-center align-items-center h-100">
+                    <input type="button" class="button-52 btn-block w-100" id="option3" name="answer"
+                      value="{{ row_data[index][3] }}" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
-                  <div
-                    class="d-flex justify-content-center align-items-center h-100"
-                  >
-                    <input
-                      type="button"
-                      class="button-52 btn-block w-100"
-                      id="option4"
-                      name="answer"
-                      value="{{ row_data[index][4] }}"
-                      onclick="toggleButton(this)"
-                    />
+                  <div class="d-flex justify-content-center align-items-center h-100">
+                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer"
+                      value="{{ row_data[index][4] }}" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
             </div>
 
-            <div
-              class="d-flex justify-content-center align-items-center"
-              style="width: 100%"
-            >
-              <div
-                class="btn-toolbar"
-                role="toolbar"
-                aria-label="Toolbar with button groups"
-              >
-                <div
-                  class="btn-group btn-group-lg m-5"
-                  role="group"
-                  aria-label="Basic outlined example"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary"
-                    name="prev"
-                    onclick="prevQuestion()"
-                    {%
-                    if
-                    index
-                    <="0"
-                    %}
-                    disabled
-                    {%
-                    endif
-                    %}
-                  >
+            <div class="d-flex justify-content-center align-items-center" style="width: 100%">
+              <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group btn-group-lg m-5" role="group" aria-label="Basic outlined example">
+                  <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" {% if index
+                    <=0 %} disabled {% endif %}>
                     Previous
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary"
-                    name="review"
-                    onclick="markForReview()"
-                  >
+                  <button type="button" class="btn btn-outline-primary" name="review" onclick="markForReview()">
                     Review
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-primary"
-                    name="next"
-                    onclick="nextQuestion()"
-                    {%
-                    if
-                    index
-                  >
-                    = row_data|length - 1 %} disabled {% endif %}>Next
+                  <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" {% if
+                    index>= row_data|length|int - 1 %} disabled {% endif %}>Next
                   </button>
                 </div>
-                <div
-                  class="btn-group btn-group-lg mt-5 mb-5"
-                  role="group"
-                  aria-label="Second group"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-success"
-                    name="submitQuizButton"
-                    onclick="submitQuiz()"
-                  >
+                <div class="btn-group btn-group-lg mt-5 mb-5" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-success" name="submitQuizButton" onclick="submitQuiz()">
                     Submit
                   </button>
                 </div>
@@ -464,40 +357,35 @@ style_content %}
         <h3 class="font-weight-bold mb-4">${row_data[index][0]}</h3>
         </div>
 
-        <input type="hidden" name="correct_answer" value="${
-          row_data[index][5]
-        }" />
+        <input type="hidden" name="correct_answer" value="${row_data[index][5]
+      }" />
 
         <div class="container">
               <div class="row mt-4 mb-2">
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option1" name="answer" value="${
-                      row_data[index][1]
-                    }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option1" name="answer" value="${row_data[index][1]
+      }" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option2" name="answer" value="${
-                      row_data[index][2]
-                    }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option2" name="answer" value="${row_data[index][2]
+      }" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
               <div class="row mt-3 mb-2">
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class=" button-52 btn-block w-100" id="option3" name="answer" value="${
-                      row_data[index][3]
-                    }" onclick="toggleButton(this)" />
+                    <input type="button" class=" button-52 btn-block w-100" id="option3" name="answer" value="${row_data[index][3]
+      }" onclick="toggleButton(this)" />
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="d-flex justify-content-center align-items-center h-100">
-                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer" value="${
-                      row_data[index][4]
-                    }" onclick="toggleButton(this)" />
+                    <input type="button" class="button-52 btn-block w-100" id="option4" name="answer" value="${row_data[index][4]
+      }" onclick="toggleButton(this)" />
                   </div>
                 </div>
               </div>
@@ -508,13 +396,11 @@ style_content %}
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
 
         <div class="btn-group btn-group-lg m-5" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" ${
-          index <= 0 ? "disabled" : ""
-        } >Previous</button>
+        <button type="button" class="btn btn-outline-primary" name="prev" onclick="prevQuestion()" ${index <= 0 ? "disabled" : ""
+      } >Previous</button>
         <button type="button" class="btn btn-outline-primary" name="review" onclick="markForReview()">Review</button>
-        <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" ${
-          index >= row_data.length - 1 ? "disabled" : ""
-        }>Next</button>
+        <button type="button" class="btn btn-outline-primary" name="next" onclick="nextQuestion()" ${index >= row_data.length - 1 ? "disabled" : ""
+      }>Next</button>
     </div>
     <div class="btn-group btn-group-lg mt-5 mb-5" role="group" aria-label="Second group">
         <button type="button" class="btn btn-success" name="submitQuizButton" onclick="submitQuiz()">Submit</button>

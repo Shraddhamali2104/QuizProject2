@@ -1069,37 +1069,3 @@ def add_result_to_user_data_DB(form_data, username):
 
 
 # adding reports
-
-
-def get_testid_score_report(username):
-    conn = connect_to_db()
-    cursor = conn.cursor()
-
-    try:
-        query = "SELECT user_id FROM accounts WHERE username = %s"
-        cursor.execute(query, (username,))
-        user_id = cursor.fetchone()[0]
-        # print("userid : line 954 db :  ")
-        # print(user_id)
-
-        query2 = """SELECT (SELECT subject FROM test_details WHERE test_id = user_data.test_id) AS subject, score
-FROM
-    user_data
-WHERE
-    user_id = %s;
-"""
-
-        cursor.execute(query2, (user_id,))
-        rows = cursor.fetchall()
-        # print(rows)
-        conn.commit()
-
-        return rows
-
-    except Exception as e:
-        print(f"Error Occurred: {e}")
-        return False
-    finally:
-        if conn:
-            cursor.close()
-            conn.close()

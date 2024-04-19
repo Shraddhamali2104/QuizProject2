@@ -11,6 +11,7 @@ from backend.database import (
     remove_subjectDB,
     add_questionsDB,
 )
+from backend.plots import plot_data_admin, plot_data_admin2
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -31,7 +32,11 @@ def view_data_admin():
     data = show_users_data("admin", username)  # fetch data for the admin.
     # print(data)
     return render_template(
-        "admin/view_data_admin.html", row_data=data, username=username
+        "admin/view_data_admin.html",
+        row_data=data,
+        username=username,
+        plot_data=plot_data_admin(data),
+        plot_data2=plot_data_admin2(data),
     )
 
 
@@ -67,7 +72,7 @@ def update_subject():
 @admin_bp.route("/add_questions", methods=["GET", "POST"])
 def add_questions():
     if request.method == "GET":
-        return render_template('admin/add_questions.html')
+        return render_template("admin/add_questions.html")
     else:
         if add_questionsDB(request.form):
             return redirect(url_for("admin.index"))
